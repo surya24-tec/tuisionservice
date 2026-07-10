@@ -31,7 +31,7 @@ A full-stack enterprise-level tuition management system built with Angular and S
 - Course Management
 - Batch Management
 - Attendance Tracking
-- Fee Management
+- Fees Management
 - Marks Management
 - Notifications
 - Reports
