@@ -14,8 +14,6 @@ interface Material {
   fileUrl?: string;
   fileName?: string;
   fileType?: string;
-  className: string;
-  subject: string;
   uploadedAt?: string;
 }
 
@@ -27,7 +25,8 @@ interface Material {
     MatIconModule, MatButtonModule,
     MatProgressSpinnerModule, MatSnackBarModule, MatTooltipModule
   ],
-  templateUrl: './teacher-materials.component.html'
+  templateUrl: './teacher-materials.component.html',
+  styleUrl: './teacher-materials.component.css'
 })
 export class TeacherMaterialsComponent implements OnInit {
   materials: Material[] = [];
@@ -35,12 +34,9 @@ export class TeacherMaterialsComponent implements OnInit {
   isUploading = false;
   showForm = false;
 
-  newMaterial: Partial<Material> = { title: '', description: '', className: '', subject: '' };
+  newMaterial: Partial<Material> = { title: '', description: '' };
   selectedFile: File | null = null;
   isDragOver = false;
-
-  classes = ['Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12'];
-  subjects = ['Mathematics', 'Science', 'English', 'Social Science', 'Computer'];
 
   constructor(
     private snackBar: MatSnackBar
@@ -73,7 +69,7 @@ export class TeacherMaterialsComponent implements OnInit {
   }
 
   openUploadForm(): void {
-    this.newMaterial = { title: '', description: '', className: '', subject: '' };
+    this.newMaterial = { title: '', description: '' };
     this.selectedFile = null;
     this.showForm = true;
   }
@@ -81,8 +77,8 @@ export class TeacherMaterialsComponent implements OnInit {
   closeForm(): void { this.showForm = false; }
 
   uploadMaterial(): void {
-    if (!this.newMaterial.title || !this.newMaterial.className) {
-      this.showSnack('Title and Class are required', 'error');
+    if (!this.newMaterial.title) {
+      this.showSnack('Title is required', 'error');
       return;
     }
 
@@ -91,8 +87,6 @@ export class TeacherMaterialsComponent implements OnInit {
       id: Date.now(),
       title: this.newMaterial.title!,
       description: this.newMaterial.description || '',
-      className: this.newMaterial.className!,
-      subject: this.newMaterial.subject || '',
       fileName: this.selectedFile?.name || 'Reference Material',
       fileType: this.selectedFile?.type || 'application/octet-stream',
       fileUrl: this.selectedFile ? URL.createObjectURL(this.selectedFile) : undefined,

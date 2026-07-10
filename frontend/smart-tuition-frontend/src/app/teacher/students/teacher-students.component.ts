@@ -14,7 +14,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { StudentService } from '../../services/student.service';
 import { Student } from '../../shared/models/student.model';
 
 @Component({
@@ -55,9 +54,9 @@ export class TeacherStudentsComponent implements OnInit {
   statuses = ['Active', 'Inactive', 'Transferred'];
 
   form!: FormGroup;
+  allStudents: Student[] = [];
 
   constructor(
-    private studentService: StudentService,
     private fb: FormBuilder,
     private snackBar: MatSnackBar
   ) {}
@@ -88,25 +87,41 @@ export class TeacherStudentsComponent implements OnInit {
 
   loadStudents(): void {
     this.isLoading = true;
-    this.studentService.getStudents(
-      this.currentPage, this.pageSize, 'name', 'asc',
-      this.searchQuery, this.filterClass
-    ).subscribe({
-      next: (response: any) => {
-        const students: Student[] = response?.content ?? response?.students ?? (Array.isArray(response) ? response : []);
-        const filteredStudents = this.filterBatch
-          ? students.filter(student => (student.batch?.name || '').toLowerCase().includes(this.filterBatch.toLowerCase()))
-          : students;
+    // Load from localStorage instead of backend API
+    const raw = localStorage.getItem('teacher_students');
+    this.allStudents = raw ? JSON.parse(raw) : [];
+    
+    // Apply filters
+    let filteredStudents = [...this.allStudents];
+    
+    if (this.searchQuery) {
+      const query = this.searchQuery.toLowerCase();
+      filteredStudents = filteredStudents.filter(student => 
+        student.name.toLowerCase().includes(query) ||
+        student.email.toLowerCase().includes(query)
+      );
+    }
+    
+    if (this.filterClass) {
+      filteredStudents = filteredStudents.filter(student => 
+        student.studentClass === this.filterClass
+      );
+    }
+    
+    if (this.filterBatch) {
+      filteredStudents = filteredStudents.filter(student => 
+        (student.batch?.name || '').toLowerCase().includes(this.filterBatch.toLowerCase())
+      );
+    }
 
-        this.dataSource.data = filteredStudents;
-        this.totalElements = response?.totalElements ?? response?.totalItems ?? filteredStudents.length;
-        this.isLoading = false;
-      },
-      error: () => {
-        this.isLoading = false;
-        this.showSnack('Failed to load students', 'error');
-      }
-    });
+    this.totalElements = filteredStudents.length;
+    
+    // Apply pagination
+    const start = this.currentPage * this.pageSize;
+    const end = start + this.pageSize;
+    this.dataSource.data = filteredStudents.slice(start, end);
+    
+    this.isLoading = false;
   }
 
   openAddForm(): void {
@@ -131,50 +146,53 @@ export class TeacherStudentsComponent implements OnInit {
   onSubmit(): void {
     if (this.form.invalid) return;
     const formValue = this.form.value;
-    const payload: Student = {
+    
+    const student: Student = {
+      id: this.isEditing ? this.selectedStudent!.id : Date.now(),
+      studentId: this.isEditing ? this.selectedStudent!.studentId : `#${Date.now().toString().slice(-4)}`,
       name: formValue.name,
       studentClass: formValue.studentClass,
       parentName: formValue.parentName,
       parentMobileNumber: formValue.parentMobileNumber,
       email: formValue.email,
       address: formValue.address,
-      batch: null,
+      batch: formValue.batchName ? { name: formValue.batchName } : null,
       admissionDate: formValue.admissionDate,
       status: formValue.status
     };
 
     if (this.isEditing && this.selectedStudent?.id) {
-      this.studentService.updateStudent(this.selectedStudent.id, payload).subscribe({
-        next: () => {
-          this.showSnack('Student updated successfully!', 'success');
-          this.closeForm();
-          this.loadStudents();
-        },
-        error: () => this.showSnack('Failed to update student', 'error')
-      });
+      // Update existing student
+      const index = this.allStudents.findIndex(s => s.id === this.selectedStudent!.id);
+      if (index !== -1) {
+        this.allStudents[index] = student;
+      }
+      this.showSnack('Student updated successfully!', 'success');
     } else {
-      this.studentService.createStudent(payload).subscribe({
-        next: () => {
-          this.showSnack('Student created successfully!', 'success');
-          this.closeForm();
-          this.loadStudents();
-        },
-        error: () => this.showSnack('Failed to create student', 'error')
-      });
+      // Add new student
+      this.allStudents.unshift(student);
+      this.showSnack('Student created successfully!', 'success');
     }
+    
+    // Save to localStorage
+    localStorage.setItem('teacher_students', JSON.stringify(this.allStudents));
+    
+    this.closeForm();
+    this.loadStudents();
   }
 
   confirmDelete(student: Student): void {
     if (!confirm(`Delete student "${student.name}"? This cannot be undone.`)) return;
     if (!student.id) return;
 
-    this.studentService.deleteStudent(student.id).subscribe({
-      next: () => {
-        this.showSnack('Student deleted successfully!', 'success');
-        this.loadStudents();
-      },
-      error: () => this.showSnack('Failed to delete student', 'error')
-    });
+    // Delete from array
+    this.allStudents = this.allStudents.filter(s => s.id !== student.id);
+    
+    // Save to localStorage
+    localStorage.setItem('teacher_students', JSON.stringify(this.allStudents));
+    
+    this.showSnack('Student deleted successfully!', 'success');
+    this.loadStudents();
   }
 
   onSearch(): void {

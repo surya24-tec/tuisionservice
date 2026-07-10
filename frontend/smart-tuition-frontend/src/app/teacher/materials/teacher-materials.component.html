@@ -15,9 +15,7 @@
     <div class="material-card" *ngFor="let material of materials">
       <mat-icon>{{ getFileIcon(material.fileType) }}</mat-icon>
       <h3>{{ material.title }}</h3>
-      <p>{{ material.description || 'No description provided.' }}</p>
-      <div>Class: {{ material.className }}</div>
-      <div>Subject: {{ material.subject || 'General' }}</div>
+      <!-- <p>{{ material.description || 'No description provided.' }}</p> -->
       <div>File: {{ material.fileName }}</div>
       <div class="actions">
         <a *ngIf="material.fileUrl" [href]="material.fileUrl" target="_blank" mat-button>Open</a>
@@ -30,12 +28,7 @@
     <h2>Upload Study Material</h2>
     <div class="form-grid">
       <input [(ngModel)]="newMaterial.title" placeholder="Title" />
-      <input [(ngModel)]="newMaterial.subject" placeholder="Subject" />
-      <select [(ngModel)]="newMaterial.className">
-        <option value="">Select Class</option>
-        <option *ngFor="let className of classes" [value]="className">{{ className }}</option>
-      </select>
-      <textarea [(ngModel)]="newMaterial.description" rows="3" placeholder="Description"></textarea>
+      <!-- <textarea [(ngModel)]="newMaterial.description" rows="3" placeholder="Description"></textarea> -->
       <input type="file" (change)="onFileSelected($event)" />
     </div>
     <div class="actions">

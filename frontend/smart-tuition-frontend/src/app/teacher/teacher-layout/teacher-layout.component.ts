@@ -21,7 +21,7 @@ export class TeacherLayoutComponent {
 
   menuItems: MenuItem[] = [
     { icon: 'dashboard', label: 'Dashboard', route: '/teacher/dashboard' },
-    { icon: 'person_add', label: 'Add Students', route: '/teacher/students' },
+    { icon: 'group', label: 'Students', route: '/teacher/students' },
     { icon: 'fact_check', label: 'Mark Attendance', route: '/teacher/attendance' },
     { icon: 'upload_file', label: 'Upload Study Materials', route: '/teacher/materials' },
     { icon: 'assignment', label: 'Conduct Tests', route: '/teacher/tests' },

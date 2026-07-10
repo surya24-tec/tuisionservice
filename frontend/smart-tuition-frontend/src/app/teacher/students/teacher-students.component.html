@@ -2,10 +2,10 @@
 
   <!-- Page Header -->
   <div class="page-header">
-    <div class="header-left">
+    <!-- <div class="header-left">
       <h1><mat-icon>school</mat-icon> Students</h1>
       <p class="subtitle">Manage all students — create, view, edit, delete</p>
-    </div>
+    </div> -->
     <button class="btn-primary" (click)="openAddForm()">
       <mat-icon>person_add</mat-icon> Add Student
     </button>
@@ -126,14 +126,14 @@
   </div>
 
   <!-- Empty State -->
-  <div class="empty-state" *ngIf="!isLoading && dataSource.data.length === 0">
+  <!-- <div class="empty-state" *ngIf="!isLoading && dataSource.data.length === 0">
     <mat-icon>school</mat-icon>
     <h3>No Students Found</h3>
     <p>Add your first student to get started</p>
     <button class="btn-primary" (click)="openAddForm()">
       <mat-icon>person_add</mat-icon> Add Student
     </button>
-  </div>
+  </div> -->
 
 </div>
 
