@@ -1,0 +1,115 @@
+<div class="page-container">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <h1><mat-icon>fact_check</mat-icon> Attendance</h1>
+      <p class="subtitle">Mark daily attendance for your students</p>
+    </div>
+    <button class="btn-primary" (click)="saveAttendance()" [disabled]="isSaving || attendance.length === 0">
+      <mat-icon>{{ isSaving ? 'hourglass_empty' : 'save' }}</mat-icon>
+      {{ isSaving ? 'Saving…' : 'Save Attendance' }}
+    </button>
+  </div>
+
+  <!-- Controls Row -->
+  <div class="controls-row">
+    <div class="control-group">
+      <label>Date</label>
+      <input type="date" [(ngModel)]="selectedDate" class="date-input" />
+    </div>
+    <div class="control-group">
+      <label>Class</label>
+      <select [(ngModel)]="filterClass" (change)="onFilterChange()" class="select-input">
+        <option value="">All Classes</option>
+        <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Batch</label>
+      <select [(ngModel)]="filterBatch" (change)="onFilterChange()" class="select-input">
+        <option value="">All Batches</option>
+        <option *ngFor="let b of batches" [value]="b">{{ b }}</option>
+      </select>
+    </div>
+    <div class="mark-all-btns">
+      <button class="btn-present" (click)="markAll('Present')">✓ Mark All Present</button>
+      <button class="btn-absent" (click)="markAll('Absent')">✗ Mark All Absent</button>
+    </div>
+  </div>
+
+  <!-- Stats Summary -->
+  <div class="stats-row" *ngIf="attendance.length > 0">
+    <div class="stat-pill present">
+      <mat-icon>check_circle</mat-icon>
+      <span>{{ presentCount }} Present</span>
+    </div>
+    <div class="stat-pill absent">
+      <mat-icon>cancel</mat-icon>
+      <span>{{ absentCount }} Absent</span>
+    </div>
+    <div class="stat-pill leave">
+      <mat-icon>event_busy</mat-icon>
+      <span>{{ leaveCount }} On Leave</span>
+    </div>
+    <div class="stat-pill total">
+      <mat-icon>people</mat-icon>
+      <span>{{ attendance.length }} Total</span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="spinner-wrap" *ngIf="isLoading">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <!-- Attendance Cards Grid -->
+  <div class="attendance-grid" *ngIf="!isLoading">
+    <div *ngIf="attendance.length === 0" class="empty-state">
+      <mat-icon>person_off</mat-icon>
+      <p>No students found for selected filters</p>
+    </div>
+
+    <div
+      *ngFor="let record of attendance"
+      class="attendance-card"
+      [ngClass]="{
+        'is-present': record.status === 'Present',
+        'is-absent': record.status === 'Absent',
+        'is-leave': record.status === 'Leave'
+      }">
+
+      <div class="card-avatar">{{ record.studentName[0] }}</div>
+      <div class="card-name">{{ record.studentName }}</div>
+
+      <div class="status-toggle">
+        <button
+          class="toggle-btn present-btn"
+          [class.active]="record.status === 'Present'"
+          (click)="setStatus(record, 'Present')"
+          matTooltip="Present">
+          <mat-icon>check</mat-icon>
+        </button>
+        <button
+          class="toggle-btn absent-btn"
+          [class.active]="record.status === 'Absent'"
+          (click)="setStatus(record, 'Absent')"
+          matTooltip="Absent">
+          <mat-icon>close</mat-icon>
+        </button>
+        <button
+          class="toggle-btn leave-btn"
+          [class.active]="record.status === 'Leave'"
+          (click)="setStatus(record, 'Leave')"
+          matTooltip="Leave">
+          <mat-icon>event_busy</mat-icon>
+        </button>
+      </div>
+
+      <div class="status-label" [ngClass]="'lbl-' + record.status.toLowerCase()">
+        {{ record.status }}
+      </div>
+    </div>
+  </div>
+
+</div>

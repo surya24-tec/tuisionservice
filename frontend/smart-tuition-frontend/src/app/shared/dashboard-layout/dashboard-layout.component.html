@@ -1,0 +1,21 @@
+<div class="layout-wrapper" [class.sidebar-collapsed]="isSidebarCollapsed">
+  <app-sidebar
+    [menuItems]="menuItems"
+    [userName]="userName"
+    [userRole]="userRole"
+    [collapsed]="isSidebarCollapsed"
+    class="sidebar-container">
+  </app-sidebar>
+  
+  <div class="main-wrapper">
+    <app-navbar 
+      [userName]="userName" 
+      [userRole]="userRole"
+      (toggleSidebar)="toggleSidebar()">
+    </app-navbar>
+    
+    <main class="main-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

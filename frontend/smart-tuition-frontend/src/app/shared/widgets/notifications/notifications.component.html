@@ -1,0 +1,20 @@
+<div class="widget-card">
+  <div class="widget-header">
+    <h3>Announcements & Notifications</h3>
+  </div>
+  <div class="notifications-list">
+    <div *ngFor="let notification of notifications" class="notification-item" [class.unread]="!notification.isRead">
+      <div class="icon-wrap" [ngClass]="notification.type">
+        <mat-icon *ngIf="notification.type === 'info'">info</mat-icon>
+        <mat-icon *ngIf="notification.type === 'warning'">warning</mat-icon>
+        <mat-icon *ngIf="notification.type === 'success'">check_circle</mat-icon>
+        <mat-icon *ngIf="notification.type === 'error'">error</mat-icon>
+      </div>
+      <div class="notification-content">
+        <h4>{{ notification.title }}</h4>
+        <p>{{ notification.message }}</p>
+        <span class="date">{{ notification.date | date:'mediumDate' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

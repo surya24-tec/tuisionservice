@@ -1,0 +1,15 @@
+<div class="widget-card">
+  <div class="widget-header">
+    <h3>{{ title }}</h3>
+  </div>
+  <div class="actions-grid">
+    <a *ngFor="let action of actions" 
+       class="action-item" 
+       [routerLink]="action.route">
+      <div class="icon-wrap" [style.color]="action.color || '#6366f1'">
+        <mat-icon>{{ action.icon }}</mat-icon>
+      </div>
+      <span>{{ action.label }}</span>
+    </a>
+  </div>
+</div>

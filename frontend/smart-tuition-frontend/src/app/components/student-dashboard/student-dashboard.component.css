@@ -1,0 +1,149 @@
+.dashboard-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-container h1 {
+  margin-bottom: 2rem;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.loading-state, .error-state {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.error-card {
+  border-left: 5px solid #d32f2f;
+  width: 100%;
+}
+
+.student-card {
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important;
+  border-radius: 12px !important;
+  padding: 1.5rem;
+}
+
+.profile-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.profile-avatar mat-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+}
+
+.student-name {
+  font-size: 1.6rem !important;
+  font-weight: bold;
+  color: #333;
+}
+
+.student-email {
+  font-size: 1rem !important;
+  color: #666;
+}
+
+.profile-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 0.85rem;
+  color: #777;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: 1.1rem;
+  color: #222;
+  font-weight: 500;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  width: fit-content;
+}
+
+.status-badge.active {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.inactive {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.info-card {
+  box-shadow: 0 4px 15px rgba(0,0,0,0.04) !important;
+  border-radius: 12px !important;
+  padding: 1.2rem;
+}
+
+.info-card mat-card-title {
+  font-size: 1.2rem;
+  color: #1976d2;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e3f2fd;
+  padding-bottom: 0.5rem;
+}
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+  gap: 1rem;
+}
+
+.info-row mat-icon {
+  color: #1976d2;
+  margin-top: 0.2rem;
+}
+
+.info-label {
+  font-size: 0.85rem;
+  color: #777;
+  margin: 0;
+}
+
+.info-value {
+  font-size: 1.05rem;
+  color: #333;
+  margin: 0.1rem 0 0 0;
+  font-weight: 500;
+}

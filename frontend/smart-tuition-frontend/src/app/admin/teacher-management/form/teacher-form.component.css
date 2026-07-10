@@ -1,0 +1,60 @@
+/* Dark theme dialog styles */
+::ng-deep .mat-mdc-dialog-surface {
+  background: #161b22 !important;
+  color: #e6e6e6 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px !important;
+}
+
+.dialog-title {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 16px;
+  padding: 24px 24px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dialog-content {
+  padding: 24px !important;
+  max-height: 70vh;
+}
+
+.teacher-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row.split > * {
+  flex: 1;
+}
+
+.full-width {
+  width: 100%;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+::ng-deep .mdc-text-field--outlined {
+  --mdc-outlined-text-field-container-shape: 8px;
+}
+
+.dialog-actions {
+  padding: 16px 24px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 0;
+}
+
+.dialog-actions button {
+  border-radius: 8px;
+  padding: 0 20px;
+  min-width: 100px;
+}

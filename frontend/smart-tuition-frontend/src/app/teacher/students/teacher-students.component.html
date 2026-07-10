@@ -1,0 +1,228 @@
+<div class="page-container">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <h1><mat-icon>school</mat-icon> Students</h1>
+      <p class="subtitle">Manage all students — create, view, edit, delete</p>
+    </div>
+    <button class="btn-primary" (click)="openAddForm()">
+      <mat-icon>person_add</mat-icon> Add Student
+    </button>
+  </div>
+
+  <!-- Filters Bar -->
+  <div class="filters-bar">
+    <div class="search-box">
+      <mat-icon>search</mat-icon>
+      <input type="text" placeholder="Search by name, email…" [(ngModel)]="searchQuery" (input)="onSearch()" />
+    </div>
+
+    <div class="filter-group">
+      <select [(ngModel)]="filterClass" (change)="onFilterChange()">
+        <option value="">All Classes</option>
+        <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
+      </select>
+
+      <select [(ngModel)]="filterBatch" (change)="onFilterChange()">
+        <option value="">All Batches</option>
+        <option *ngFor="let b of batches" [value]="b">{{ b }}</option>
+      </select>
+
+      <button class="btn-ghost" (click)="clearFilters()" matTooltip="Clear Filters">
+        <mat-icon>filter_alt_off</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="spinner-wrap" *ngIf="isLoading">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <!-- Data Table -->
+  <div class="table-card" *ngIf="!isLoading">
+    <div class="table-wrap">
+      <table mat-table [dataSource]="dataSource" matSort class="students-table">
+
+        <!-- Student ID -->
+        <ng-container matColumnDef="studentId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+          <td mat-cell *matCellDef="let s">
+            <span class="id-badge">{{ s.studentId || '#' + s.id }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let s">
+            <div class="student-name">
+              <div class="avatar">{{ s.name[0] }}</div>
+              <span>{{ s.name }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Class -->
+        <ng-container matColumnDef="studentClass">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Class</th>
+          <td mat-cell *matCellDef="let s">{{ s.studentClass }}</td>
+        </ng-container>
+
+        <!-- Batch -->
+        <ng-container matColumnDef="batch">
+          <th mat-header-cell *matHeaderCellDef>Batch</th>
+          <td mat-cell *matCellDef="let s"><span class="batch-tag">{{ s.batch?.name || 'Not Assigned' }}</span></td>
+        </ng-container>
+
+        <!-- Parent -->
+        <ng-container matColumnDef="parentName">
+          <th mat-header-cell *matHeaderCellDef>Parent</th>
+          <td mat-cell *matCellDef="let s">{{ s.parentName }}</td>
+        </ng-container>
+
+        <!-- Parent Mobile -->
+        <ng-container matColumnDef="parentMobileNumber">
+          <th mat-header-cell *matHeaderCellDef>Mobile</th>
+          <td mat-cell *matCellDef="let s">{{ s.parentMobileNumber }}</td>
+        </ng-container>
+
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let s">
+            <span class="status-chip" [ngClass]="getStatusClass(s.status)">{{ s.status }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let s">
+            <div class="action-btns">
+              <button mat-icon-button class="btn-edit" (click)="openEditForm(s)" matTooltip="Edit Student">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="btn-delete" (click)="confirmDelete(s)" matTooltip="Delete Student">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+      </table>
+    </div>
+
+    <mat-paginator
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && dataSource.data.length === 0">
+    <mat-icon>school</mat-icon>
+    <h3>No Students Found</h3>
+    <p>Add your first student to get started</p>
+    <button class="btn-primary" (click)="openAddForm()">
+      <mat-icon>person_add</mat-icon> Add Student
+    </button>
+  </div>
+
+</div>
+
+<!-- ========== SLIDE-IN FORM PANEL ========== -->
+<div class="form-overlay" [class.visible]="showForm" (click)="closeForm()"></div>
+
+<aside class="form-panel" [class.open]="showForm">
+  <div class="form-panel-header">
+    <h2>{{ isEditing ? 'Edit Student' : 'Add New Student' }}</h2>
+    <button mat-icon-button (click)="closeForm()"><mat-icon>close</mat-icon></button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="student-form">
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input formControlName="name" placeholder="Student full name" />
+        <span class="error" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">Name is required (min 2 chars)</span>
+      </div>
+    </div>
+
+    <div class="form-row two-col">
+      <div class="form-group">
+        <label>Class *</label>
+        <select formControlName="studentClass">
+          <option value="">Select Class</option>
+          <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
+        </select>
+        <span class="error" *ngIf="form.get('studentClass')?.touched && form.get('studentClass')?.invalid">Class is required</span>
+      </div>
+      <div class="form-group">
+        <label>Batch</label>
+        <select formControlName="batchName">
+          <option value="">Not Assigned</option>
+          <option *ngFor="let b of batches" [value]="b">{{ b }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row two-col">
+      <div class="form-group">
+        <label>Parent Name *</label>
+        <input formControlName="parentName" placeholder="Parent / Guardian name" />
+        <span class="error" *ngIf="form.get('parentName')?.touched && form.get('parentName')?.invalid">Parent name required</span>
+      </div>
+      <div class="form-group">
+        <label>Parent Mobile *</label>
+        <input formControlName="parentMobileNumber" placeholder="10-digit mobile number" />
+        <span class="error" *ngIf="form.get('parentMobileNumber')?.touched && form.get('parentMobileNumber')?.invalid">Valid 10-digit number required</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Email *</label>
+        <input formControlName="email" type="email" placeholder="student@email.com" />
+        <span class="error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">Valid email required</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Address *</label>
+        <textarea formControlName="address" placeholder="Full address" rows="2"></textarea>
+        <span class="error" *ngIf="form.get('address')?.touched && form.get('address')?.invalid">Address is required</span>
+      </div>
+    </div>
+
+    <div class="form-row two-col">
+      <div class="form-group">
+        <label>Admission Date *</label>
+        <input formControlName="admissionDate" type="date" />
+      </div>
+      <div class="form-group">
+        <label>Status *</label>
+        <select formControlName="status">
+          <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-ghost" (click)="closeForm()">Cancel</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">
+        <mat-icon>{{ isEditing ? 'save' : 'person_add' }}</mat-icon>
+        {{ isEditing ? 'Update Student' : 'Add Student' }}
+      </button>
+    </div>
+
+  </form>
+</aside>

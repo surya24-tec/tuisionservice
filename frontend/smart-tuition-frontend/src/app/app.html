@@ -1,0 +1,36 @@
+
+<div class="app-shell">
+  @if (showToolbar) {
+  <!-- <mat-toolbar color="primary">
+    <span>Tuition Management System</span>
+    <span class="spacer"></span>
+    @if (!authService.isLoggedIn()) {
+      <button mat-button routerLink="/">Home</button>
+      <button mat-button routerLink="/login">Login</button>
+      <button mat-button routerLink="/register">Register</button>
+    } @else {
+      @if (authService.hasRole('ROLE_ADMIN')) {
+        <button mat-button routerLink="/admin/dashboard">Dashboard</button>
+      }
+      @if (authService.hasRole('ROLE_TEACHER')) {
+        <button mat-button routerLink="/teacher/dashboard">Dashboard</button>
+      }
+      @if (authService.hasRole('ROLE_STUDENT')) {
+        <button mat-button routerLink="/student/dashboard">Dashboard</button>
+      }
+      <button mat-button (click)="logout()">Logout</button>
+    }
+  </mat-toolbar> -->
+  }
+
+  <main class="app-content">
+    <router-outlet />
+  </main>
+
+  @if (showToolbar) {
+  <!-- <footer class="app-footer">
+    <div>Tuition Management System</div>
+    <div>Streamlined learning operations for admins, teachers, and students.</div>
+  </footer> -->
+  }
+</div>

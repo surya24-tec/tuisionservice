@@ -1,0 +1,26 @@
+<div class="profile-page">
+  <div class="spinner-wrap" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div class="profile-card" *ngIf="!isLoading && profile">
+    <div class="avatar">{{ getInitials() }}</div>
+    <h1>{{ profile.name }}</h1>
+    <p>{{ profile.teachingSubject }}</p>
+
+    <div class="profile-grid">
+      <div><strong>Email:</strong> {{ profile.email }}</div>
+      <div><strong>Mobile:</strong> {{ profile.mobileNumber }}</div>
+      <div><strong>Experience:</strong> {{ profile.experience }} years</div>
+      <div><strong>Salary:</strong> {{ profile.salary }}</div>
+      <div><strong>Joining Date:</strong> {{ profile.joiningDate }}</div>
+      <div><strong>Status:</strong> {{ profile.status }}</div>
+      <div><strong>Address:</strong> {{ profile.address || 'Not provided' }}</div>
+    </div>
+  </div>
+
+  <div class="profile-card" *ngIf="!isLoading && !profile">
+    <h2>{{ userName }}</h2>
+    <p>Teacher profile is not available yet.</p>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+<h2 mat-dialog-title class="dialog-title">{{ isEditMode ? 'Edit Teacher' : 'Add New Teacher' }}</h2>
+
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="teacherForm" class="teacher-form">
+    
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="name" placeholder="John Doe">
+        <mat-error *ngIf="teacherForm.get('name')?.hasError('required')">Name is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row split">
+      <mat-form-field appearance="outline">
+        <mat-label>Email Address</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="john@example.com">
+        <mat-error *ngIf="teacherForm.get('email')?.hasError('required')">Email is required</mat-error>
+        <mat-error *ngIf="teacherForm.get('email')?.hasError('email')">Please enter a valid email</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Mobile Number</mat-label>
+        <input matInput formControlName="mobileNumber" placeholder="9876543210">
+        <mat-error *ngIf="teacherForm.get('mobileNumber')?.hasError('required')">Mobile number is required</mat-error>
+        <mat-error *ngIf="teacherForm.get('mobileNumber')?.hasError('pattern')">Enter a valid 10-digit number</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row split">
+      <mat-form-field appearance="outline">
+        <mat-label>Teaching Subject</mat-label>
+        <input matInput formControlName="teachingSubject" placeholder="Mathematics">
+        <mat-error *ngIf="teacherForm.get('teachingSubject')?.hasError('required')">Subject is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Experience (Years)</mat-label>
+        <input matInput type="number" formControlName="experience" placeholder="5">
+        <mat-error *ngIf="teacherForm.get('experience')?.hasError('required')">Experience is required</mat-error>
+        <mat-error *ngIf="teacherForm.get('experience')?.hasError('min')">Experience cannot be negative</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row split">
+      <mat-form-field appearance="outline">
+        <mat-label>Salary (₹)</mat-label>
+        <input matInput type="number" formControlName="salary" placeholder="50000">
+        <mat-error *ngIf="teacherForm.get('salary')?.hasError('required')">Salary is required</mat-error>
+        <mat-error *ngIf="teacherForm.get('salary')?.hasError('min')">Salary cannot be negative</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Joining Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="joiningDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="teacherForm.get('joiningDate')?.hasError('required')">Date is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of statusOptions" [value]="status">
+            {{ status }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="teacherForm.get('status')?.hasError('required')">Status is required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Address</mat-label>
+        <textarea matInput formControlName="address" rows="3" placeholder="Full residential address"></textarea>
+      </mat-form-field>
+    </div>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button (click)="onCancel()" [disabled]="isLoading">Cancel</button>
+  <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="teacherForm.invalid || isLoading">
+    {{ isEditMode ? 'Update' : 'Save' }}
+  </button>
+</mat-dialog-actions>

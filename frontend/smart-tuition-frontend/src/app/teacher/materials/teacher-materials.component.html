@@ -1,0 +1,46 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1>Study Materials</h1>
+      <p>Upload and manage study materials for your classes.</p>
+    </div>
+    <button mat-flat-button color="primary" (click)="openUploadForm()">Upload Material</button>
+  </div>
+
+  <div class="spinner-wrap" *ngIf="isLoading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div class="materials-grid" *ngIf="!isLoading">
+    <div class="material-card" *ngFor="let material of materials">
+      <mat-icon>{{ getFileIcon(material.fileType) }}</mat-icon>
+      <h3>{{ material.title }}</h3>
+      <p>{{ material.description || 'No description provided.' }}</p>
+      <div>Class: {{ material.className }}</div>
+      <div>Subject: {{ material.subject || 'General' }}</div>
+      <div>File: {{ material.fileName }}</div>
+      <div class="actions">
+        <a *ngIf="material.fileUrl" [href]="material.fileUrl" target="_blank" mat-button>Open</a>
+        <button mat-button color="warn" (click)="deleteMaterial(material)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-card" *ngIf="showForm">
+    <h2>Upload Study Material</h2>
+    <div class="form-grid">
+      <input [(ngModel)]="newMaterial.title" placeholder="Title" />
+      <input [(ngModel)]="newMaterial.subject" placeholder="Subject" />
+      <select [(ngModel)]="newMaterial.className">
+        <option value="">Select Class</option>
+        <option *ngFor="let className of classes" [value]="className">{{ className }}</option>
+      </select>
+      <textarea [(ngModel)]="newMaterial.description" rows="3" placeholder="Description"></textarea>
+      <input type="file" (change)="onFileSelected($event)" />
+    </div>
+    <div class="actions">
+      <button mat-button (click)="closeForm()">Cancel</button>
+      <button mat-flat-button color="primary" (click)="uploadMaterial()" [disabled]="isUploading">Save</button>
+    </div>
+  </div>
+</div>

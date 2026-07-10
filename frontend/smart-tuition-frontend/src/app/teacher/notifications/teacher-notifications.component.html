@@ -1,0 +1,46 @@
+<div class="page-container">
+  <div class="page-header">
+    <div class="header-left">
+      <h1><mat-icon>notifications</mat-icon> Notifications</h1>
+      <p class="subtitle">
+        You have <strong>{{ unreadCount }}</strong> unread notification{{ unreadCount !== 1 ? 's' : '' }}
+      </p>
+    </div>
+    <button class="btn-ghost" (click)="markAllRead()" [disabled]="unreadCount === 0">
+      <mat-icon>done_all</mat-icon> Mark All Read
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div class="spinner-wrap" *ngIf="isLoading">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
+
+  <!-- Notifications List -->
+  <div class="notifications-list" *ngIf="!isLoading">
+    <div
+      *ngFor="let n of notifications"
+      class="notification-card"
+      [class.unread]="!n.isRead"
+      (click)="markRead(n)"
+    >
+      <div class="notif-icon" [ngClass]="'type-' + n.type">
+        <mat-icon>{{ getTypeIcon(n.type) }}</mat-icon>
+      </div>
+      <div class="notif-content">
+        <div class="notif-title">{{ n.title }}</div>
+        <div class="notif-message">{{ n.message }}</div>
+        <div class="notif-date">{{ n.date | date: 'medium' }}</div>
+      </div>
+      <div class="notif-status">
+        <span class="dot" *ngIf="!n.isRead"></span>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="notifications.length === 0">
+      <mat-icon>notifications_off</mat-icon>
+      <h3>No Notifications</h3>
+      <p>You're all caught up!</p>
+    </div>
+  </div>
+</div>

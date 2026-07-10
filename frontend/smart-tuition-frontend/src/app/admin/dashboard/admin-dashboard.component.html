@@ -1,0 +1,54 @@
+<div class="dashboard-page">
+  <div class="page-header">
+    <h1 class="page-title">Admin Dashboard</h1>
+    <p class="page-subtitle">Welcome back! Here is a summary of the tuition center statistics.</p>
+  </div>
+
+  <div class="loading-shade" *ngIf="isLoading">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div class="dashboard-content" *ngIf="!isLoading">
+    <!-- Stat Cards -->
+    <app-dashboard-cards [cards]="statCards"></app-dashboard-cards>
+
+    <!-- Charts Layout Grid -->
+    <div class="charts-grid">
+      <div class="chart-item">
+        <app-charts-widget 
+          title="Student Count by Class" 
+          chartType="bar" 
+          [chartLabels]="studentCountLabels" 
+          [chartData]="studentCountData">
+        </app-charts-widget>
+      </div>
+
+      <div class="chart-item">
+        <app-charts-widget 
+          title="Monthly Fee Collection" 
+          chartType="line" 
+          [chartLabels]="feeCollectionLabels" 
+          [chartData]="feeCollectionData">
+        </app-charts-widget>
+      </div>
+
+      <div class="chart-item">
+        <app-charts-widget 
+          title="Attendance Analytics" 
+          chartType="doughnut" 
+          [chartLabels]="attendanceLabels" 
+          [chartData]="attendanceData">
+        </app-charts-widget>
+      </div>
+
+      <div class="chart-item">
+        <app-charts-widget 
+          title="Student Performance Analytics" 
+          chartType="bar" 
+          [chartLabels]="performanceLabels" 
+          [chartData]="performanceData">
+        </app-charts-widget>
+      </div>
+    </div>
+  </div>
+</div>

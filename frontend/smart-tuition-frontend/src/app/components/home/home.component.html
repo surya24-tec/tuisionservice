@@ -1,0 +1,355 @@
+<header class="bg-white shadow-sm sticky-top">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light py-3">
+      <a class="navbar-brand fw-bold text-primary" href="#">
+        <i class="bi bi-book-half me-2"></i>Learnify
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link text-dark fw-medium" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-dark fw-medium" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link text-dark fw-medium" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link text-dark fw-medium" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link text-dark fw-medium" href="#contact">Contact</a></li>
+        </ul>
+        <div class="ms-lg-4 mt-3 mt-lg-0">
+          <a routerLink="/login" class="btn btn-outline-primary me-2">Login</a>
+          <a routerLink="/register" class="btn btn-primary">Register</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<section id="home" class="hero-section">
+  <div class="container">
+    <div class="row align-items-center min-vh-75 py-5">
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <h1 class="display-4 fw-bold text-white mb-4">
+          Smart Tuition Management System
+        </h1>
+        <p class="lead text-white mb-5 opacity-90">
+          Empowering tuition centers with modern digital solutions. Manage students, teachers, fees, and attendance all in one place.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a routerLink="/register" class="btn btn-light btn-lg px-5 py-3 fw-semibold text-primary">
+            Get Started
+          </a>
+          <a href="#services" class="btn btn-outline-light btn-lg px-5 py-3 fw-semibold">
+            Explore Services
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center">
+        <img src="https://coresg-normal.trae.ai/api/v1/text_to_image?prompt=professional%20education%20dashboard%20illustration%20with%20blue%20theme&image_size=square" class="img-fluid rounded-4 shadow-lg" alt="Learnify Dashboard">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-primary mb-3">About Learnify</h2>
+      <p class="lead text-muted">Transforming traditional tuition management with smart digital tools</p>
+    </div>
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <img src="https://coresg-normal.trae.ai/api/v1/text_to_image?prompt=modern%20classroom%20with%20digital%20learning%20tools&image_size=square" class="img-fluid rounded-4 shadow" alt="About Learnify">
+      </div>
+      <div class="col-lg-6">
+        <p class="fs-5 text-muted mb-4">
+          Learnify is a comprehensive tuition management system designed to streamline administrative tasks, enhance teaching efficiency, and improve student engagement. Our platform offers a seamless experience for administrators, teachers, and students.
+        </p>
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="d-flex gap-3">
+              <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-3 p-3">
+                <i class="bi bi-shield-check fs-3"></i>
+              </div>
+              <div>
+                <h5 class="fw-semibold">Secure & Reliable</h5>
+                <p class="text-muted small">Enterprise-grade security</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex gap-3">
+              <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-3 p-3">
+                <i class="bi bi-speedometer2 fs-3"></i>
+              </div>
+              <div>
+                <h5 class="fw-semibold">High Performance</h5>
+                <p class="text-muted small">Fast and responsive</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-primary mb-3">Why Choose Learnify?</h2>
+      <p class="lead text-muted">Powerful features to manage your tuition center efficiently</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card text-center p-5 bg-white rounded-4 shadow-sm hover-shadow">
+          <div class="icon-box mx-auto bg-primary bg-opacity-10 text-primary rounded-3 p-4 mb-4">
+            <i class="bi bi-people fs-1"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Student Management</h4>
+          <p class="text-muted">Efficiently manage student records, admissions, and profiles</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card text-center p-5 bg-white rounded-4 shadow-sm hover-shadow">
+          <div class="icon-box mx-auto bg-primary bg-opacity-10 text-primary rounded-3 p-4 mb-4">
+            <i class="bi bi-person-workspace fs-1"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Teacher Management</h4>
+          <p class="text-muted">Organize teacher information, schedules, and performance</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card text-center p-5 bg-white rounded-4 shadow-sm hover-shadow">
+          <div class="icon-box mx-auto bg-primary bg-opacity-10 text-primary rounded-3 p-4 mb-4">
+            <i class="bi bi-cash-stack fs-1"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Fee Management</h4>
+          <p class="text-muted">Track fees, payments, and generate receipts easily</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card text-center p-5 bg-white rounded-4 shadow-sm hover-shadow">
+          <div class="icon-box mx-auto bg-primary bg-opacity-10 text-primary rounded-3 p-4 mb-4">
+            <i class="bi bi-calendar-check fs-1"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Attendance Tracking</h4>
+          <p class="text-muted">Monitor student and teacher attendance seamlessly</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card text-center p-5 bg-white rounded-4 shadow-sm hover-shadow">
+          <div class="icon-box mx-auto bg-primary bg-opacity-10 text-primary rounded-3 p-4 mb-4">
+            <i class="bi bi-graph-up-arrow fs-1"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Academic Analytics</h4>
+          <p class="text-muted">Analyze performance with detailed reports and insights</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card text-center p-5 bg-white rounded-4 shadow-sm hover-shadow">
+          <div class="icon-box mx-auto bg-primary bg-opacity-10 text-primary rounded-3 p-4 mb-4">
+            <i class="bi bi-journal-text fs-1"></i>
+          </div>
+          <h4 class="fw-bold mb-3">Study Materials</h4>
+          <p class="text-muted">Share and manage digital study resources effortlessly</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-primary mb-3">Our Services</h2>
+      <p class="lead text-muted">Comprehensive solutions for modern tuition centers</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="service-card p-4 bg-white rounded-4 shadow-sm hover-shadow h-100">
+          <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-3 p-3 mb-3">
+            <i class="bi bi-laptop fs-4"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Online Learning</h5>
+          <p class="text-muted small">Access classes from anywhere with our online learning platform</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="service-card p-4 bg-white rounded-4 shadow-sm hover-shadow h-100">
+          <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-3 p-3 mb-3">
+            <i class="bi bi-building fs-4"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Classroom Learning</h5>
+          <p class="text-muted small">Traditional classroom experience with digital enhancements</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="service-card p-4 bg-white rounded-4 shadow-sm hover-shadow h-100">
+          <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-3 p-3 mb-3">
+            <i class="bi bi-bar-chart fs-4"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Academic Analytics</h5>
+          <p class="text-muted small">Data-driven insights to improve student performance</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="service-card p-4 bg-white rounded-4 shadow-sm hover-shadow h-100">
+          <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-3 p-3 mb-3">
+            <i class="bi bi-credit-card fs-4"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Fee Management</h5>
+          <p class="text-muted small">Simplify fee collection and financial management</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-primary mb-3">How It Works</h2>
+      <p class="lead text-muted">Simple workflow for all users</p>
+    </div>
+    <div class="row align-items-center">
+      <div class="col-md-4 text-center">
+        <div class="workflow-step bg-primary bg-opacity-10 rounded-4 p-5 mx-3">
+          <div class="icon-box bg-white text-primary rounded-circle p-4 mb-3 shadow-sm mx-auto">
+            <i class="bi bi-person-gear fs-1"></i>
+          </div>
+          <h5 class="fw-bold">Admin</h5>
+          <p class="text-muted small">Manage center operations, users, and settings</p>
+        </div>
+      </div>
+      <div class="col-md-1 text-center">
+        <i class="bi bi-arrow-right text-primary fs-1 opacity-50"></i>
+      </div>
+      <div class="col-md-4 text-center">
+        <div class="workflow-step bg-primary bg-opacity-10 rounded-4 p-5 mx-3">
+          <div class="icon-box bg-white text-primary rounded-circle p-4 mb-3 shadow-sm mx-auto">
+            <i class="bi bi-person-check fs-1"></i>
+          </div>
+          <h5 class="fw-bold">Teacher</h5>
+          <p class="text-muted small">Teach classes, track attendance, and manage marks</p>
+        </div>
+      </div>
+      <div class="col-md-1 text-center">
+        <i class="bi bi-arrow-right text-primary fs-1 opacity-50"></i>
+      </div>
+      <div class="col-md-2 text-center">
+        <div class="workflow-step bg-primary bg-opacity-10 rounded-4 p-5 mx-3">
+          <div class="icon-box bg-white text-primary rounded-circle p-4 mb-3 shadow-sm mx-auto">
+            <i class="bi bi-mortarboard fs-1"></i>
+          </div>
+          <h5 class="fw-bold">Student</h5>
+          <p class="text-muted small">Access classes, materials, and track progress</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section class="py-5 bg-primary">
+  <div class="container">
+    <div class="row g-4 text-center text-white">
+      <div class="col-md-3">
+        <h3 class="display-4 fw-bold mb-2">500+</h3>
+        <p class="opacity-90">Happy Students</p>
+      </div>
+      <div class="col-md-3">
+        <h3 class="display-4 fw-bold mb-2">50+</h3>
+        <p class="opacity-90">Expert Teachers</p>
+      </div>
+      <div class="col-md-3">
+        <h3 class="display-4 fw-bold mb-2">100+</h3>
+        <p class="opacity-90">Courses Offered</p>
+      </div>
+      <div class="col-md-3">
+        <h3 class="display-4 fw-bold mb-2">98%</h3>
+        <p class="opacity-90">Success Rate</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="display-5 fw-bold text-primary mb-3">Get In Touch</h2>
+      <p class="lead text-muted">Have questions? We'd love to hear from you</p>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="bg-white rounded-4 shadow p-5">
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="text-center">
+                <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-3 p-3 mb-3 mx-auto">
+                  <i class="bi bi-envelope fs-4"></i>
+                </div>
+                <h6 class="fw-semibold">Email</h6>
+                <p class="text-muted small">support@learnify.com</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="text-center">
+                <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-3 p-3 mb-3 mx-auto">
+                  <i class="bi bi-telephone fs-4"></i>
+                </div>
+                <h6 class="fw-semibold">Phone</h6>
+                <p class="text-muted small">+91 9876543210</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="text-center">
+                <div class="icon-box bg-primary bg-opacity-10 text-primary rounded-3 p-3 mb-3 mx-auto">
+                  <i class="bi bi-geo-alt fs-4"></i>
+                </div>
+                <h6 class="fw-semibold">Address</h6>
+                <p class="text-muted small">Your City, India</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-dark text-white py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <h5 class="fw-bold mb-3">Learnify</h5>
+        <p class="text-muted small">Empowering tuition centers with modern digital solutions for better education management.</p>
+      </div>
+      <div class="col-lg-2 col-md-4">
+        <h6 class="fw-semibold mb-3">Quick Links</h6>
+        <ul class="list-unstyled text-muted small">
+          <li class="mb-2"><a href="#home" class="text-decoration-none text-muted">Home</a></li>
+          <li class="mb-2"><a href="#about" class="text-decoration-none text-muted">About</a></li>
+          <li class="mb-2"><a href="#services" class="text-decoration-none text-muted">Services</a></li>
+          <li class="mb-2"><a href="#contact" class="text-decoration-none text-muted">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <h6 class="fw-semibold mb-3">Services</h6>
+        <ul class="list-unstyled text-muted small">
+          <li class="mb-2">Online Learning</li>
+          <li class="mb-2">Classroom Learning</li>
+          <li class="mb-2">Academic Analytics</li>
+          <li class="mb-2">Fee Management</li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-4">
+        <h6 class="fw-semibold mb-3">Contact Us</h6>
+        <p class="text-muted small mb-2"><i class="bi bi-envelope me-2"></i>support@learnify.com</p>
+        <p class="text-muted small"><i class="bi bi-telephone me-2"></i>+91 9876543210</p>
+      </div>
+    </div>
+    <hr class="bg-secondary my-4">
+    <div class="text-center text-muted small">
+      &copy; 2026 Learnify. All Rights Reserved.
+    </div>
+  </div>
+</footer>

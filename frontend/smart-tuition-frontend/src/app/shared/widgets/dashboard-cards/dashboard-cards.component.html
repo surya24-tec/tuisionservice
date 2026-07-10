@@ -1,0 +1,22 @@
+<div class="stats-grid">
+  <div *ngFor="let card of cards" class="stat-card">
+    <div class="stat-card-inner">
+      <div class="stat-header">
+        <div class="stat-info">
+          <span class="stat-label">{{ card.title }}</span>
+          <span class="stat-value">{{ card.value }}</span>
+        </div>
+        <div class="stat-icon-wrap" [style.background]="card.color + '18'">
+          <mat-icon [style.color]="card.color">{{ card.icon }}</mat-icon>
+        </div>
+      </div>
+      <div class="stat-footer" *ngIf="card.trend">
+        <div class="stat-trend" [class.up]="card.trendUp" [class.down]="!card.trendUp">
+          <mat-icon>{{ card.trendUp ? 'trending_up' : 'trending_down' }}</mat-icon>
+          <span>{{ card.trend }}</span>
+        </div>
+        <span class="trend-label">vs last month</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<header class="navbar">
+  <div class="navbar-left">
+    <button mat-icon-button class="menu-btn" (click)="onToggleSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="search-bar">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" placeholder="Search students, teachers, courses...">
+    </div>
+  </div>
+
+  <div class="navbar-right">
+    <button mat-icon-button class="action-btn">
+      <mat-icon matBadge="3" matBadgeColor="warn">notifications</mat-icon>
+    </button>
+    
+    <button mat-button class="profile-btn" [matMenuTriggerFor]="profileMenu">
+      <div class="profile-info">
+        <span class="user-name">{{ userName }}</span>
+        <span class="user-role">{{ userRole }}</span>
+      </div>
+      <div class="avatar">
+        <mat-icon>person</mat-icon>
+      </div>
+      <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+    </button>
+    
+    <mat-menu #profileMenu="matMenu" class="custom-menu">
+      <button mat-menu-item>
+        <mat-icon>person</mat-icon>
+        <span>My Profile</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logout()" class="logout-text">
+        <mat-icon color="warn">logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
+  </div>
+</header>

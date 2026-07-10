@@ -1,0 +1,55 @@
+<div class="dashboard-page">
+  <div class="page-header">
+    <h1 class="page-title">Teacher Dashboard</h1>
+    <p class="page-subtitle">Welcome back, {{ teacherName }}! Here is a summary of your classes.</p>
+  </div>
+
+  <div class="loading-shade" *ngIf="isLoading">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div class="dashboard-content" *ngIf="!isLoading">
+    <!-- Stat Cards -->
+    <app-dashboard-cards [cards]="statCards"></app-dashboard-cards>
+
+    <!-- Mid Section Layout: Quick Actions & Main Chart -->
+    <div class="mid-section">
+      <div class="quick-access-wrap">
+        <app-quick-access-widget 
+          title="Quick Operations" 
+          [actions]="quickActions">
+        </app-quick-access-widget>
+      </div>
+
+      <div class="main-chart-wrap">
+        <app-charts-widget 
+          title="Student Performance Analytics" 
+          chartType="bar" 
+          [chartLabels]="performanceLabels" 
+          [chartData]="performanceData">
+        </app-charts-widget>
+      </div>
+    </div>
+
+    <!-- Bottom Section: Sub Charts -->
+    <div class="bottom-section">
+      <div class="chart-item">
+        <app-charts-widget 
+          title="Attendance Analytics" 
+          chartType="pie" 
+          [chartLabels]="attendanceLabels" 
+          [chartData]="attendanceData">
+        </app-charts-widget>
+      </div>
+
+      <div class="chart-item">
+        <app-charts-widget 
+          title="Test Results Analytics" 
+          chartType="bar" 
+          [chartLabels]="testResultsLabels" 
+          [chartData]="testResultsData">
+        </app-charts-widget>
+      </div>
+    </div>
+  </div>
+</div>

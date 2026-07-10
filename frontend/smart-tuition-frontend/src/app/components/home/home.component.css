@@ -1,0 +1,49 @@
+.hero-section {
+  background: linear-gradient(135deg, #1eaf94 0%, #3bf6a8 100%);
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+}
+
+.min-vh-75 {
+  min-height: 75vh;
+}
+
+.hover-shadow {
+  transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+}
+
+.navbar .nav-link {
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #1e40af !important;
+}
+
+.btn-primary {
+  background-color: #1e40af;
+  border-color: #1e40af;
+}
+
+.btn-primary:hover {
+  background-color: #1e3a8a;
+  border-color: #1e3a8a;
+}
+
+.text-primary {
+  color: #1e40af !important;
+}
+
+.bg-primary {
+  background-color: #1e40af !important;
+}
+
+.bg-opacity-10 {
+  background-color: rgba(30, 64, 175, 0.1) !important;
+}

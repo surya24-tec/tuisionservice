@@ -1,0 +1,40 @@
+<div class="dashboard-page">
+  <div class="page-header">
+    <h1 class="page-title">Student Dashboard</h1>
+    <p class="page-subtitle">Welcome back, {{ studentName }}! Here's a look at your progress and schedule.</p>
+  </div>
+
+  <div class="loading-shade" *ngIf="isLoading">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div class="dashboard-content" *ngIf="!isLoading">
+    <!-- Stat Cards -->
+    <app-dashboard-cards [cards]="statCards"></app-dashboard-cards>
+
+    <!-- Content Sections -->
+    <div class="widgets-grid">
+      <div class="left-column">
+        <app-timetable-widget 
+          [userId]="userId" 
+          role="STUDENT">
+        </app-timetable-widget>
+      </div>
+
+      <div class="right-column">
+        <div class="quick-access-wrap">
+          <app-quick-access-widget 
+            title="Quick Navigation" 
+            [actions]="quickActions">
+          </app-quick-access-widget>
+        </div>
+
+        <div class="notifications-wrap">
+          <app-notifications-widget 
+            role="STUDENT">
+          </app-notifications-widget>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

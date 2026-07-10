@@ -1,0 +1,26 @@
+<div class="widget-card">
+  <div class="widget-header">
+    <h3>Today's Schedule</h3>
+    <a class="view-all" [routerLink]="'/' + role.toLowerCase() + '/timetable'">Full Timetable</a>
+  </div>
+  <div class="schedule-list">
+    <div *ngFor="let item of schedule" class="schedule-item">
+      <div class="schedule-time">
+        <mat-icon>schedule</mat-icon>
+        <span>{{ item.time }}</span>
+      </div>
+      <div class="schedule-details">
+        <span class="schedule-subject">{{ item.subject }}</span>
+        <div class="schedule-meta">
+          <span class="schedule-teacher"><mat-icon>person</mat-icon> {{ item.teacher }}</span>
+          <span class="schedule-room" *ngIf="item.room"><mat-icon>room</mat-icon> {{ item.room }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="no-data" *ngIf="schedule.length === 0">
+      <mat-icon>event_available</mat-icon>
+      <p>No classes scheduled for today.</p>
+    </div>
+  </div>
+</div>
