@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,14 +7,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { StudentService } from '../../services/student.service';
 import { Student } from '../../shared/models/student.model';
+
+type AttendanceStatus = 'Present' | 'Absent';
 
 interface AttendanceRecord {
   studentId: number;
+  studentCode: string;
   studentName: string;
   studentClass: string;
-  status: 'Present' | 'Absent' | 'Leave';
+  batchName: string;
+  status: AttendanceStatus;
 }
 
 @Component({
@@ -32,22 +36,30 @@ export class TeacherAttendanceComponent implements OnInit {
   filterClass = '';
   filterBatch = '';
 
-  classes = ['Class 8', 'Class 9', 'Class 10', 'Class 11', 'Class 12'];
-  batches = ['Morning', 'Afternoon', 'Evening', 'Weekend'];
+  classes: string[] = [];
+  batches: string[] = [];
 
   isLoading = false;
   isSaving = false;
   students: Student[] = [];
   attendance: AttendanceRecord[] = [];
 
+  get todayStr(): string {
+    return new Date().toISOString().split('T')[0];
+  }
+
+  get isToday(): boolean {
+    return this.selectedDate === this.todayStr;
+  }
+
+  get totalStudents(): number { return this.attendance.length; }
   get presentCount(): number { return this.attendance.filter(a => a.status === 'Present').length; }
   get absentCount(): number { return this.attendance.filter(a => a.status === 'Absent').length; }
-  get leaveCount(): number { return this.attendance.filter(a => a.status === 'Leave').length; }
+  get attendancePercentage(): number {
+    return this.totalStudents ? Math.round((this.presentCount / this.totalStudents) * 100) : 0;
+  }
 
-  constructor(
-    private studentService: StudentService,
-    private snackBar: MatSnackBar
-  ) {}
+  constructor(private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.loadStudents();
@@ -55,53 +67,77 @@ export class TeacherAttendanceComponent implements OnInit {
 
   loadStudents(): void {
     this.isLoading = true;
-    this.studentService.getStudents(0, 100, 'name', 'asc', '', this.filterClass).subscribe({
-      next: (response: any) => {
-        const list: Student[] = response?.content ?? response?.students ?? (Array.isArray(response) ? response : []);
-        this.students = list;
-        this.attendance = list.map(s => ({
-          studentId: s.id!,
-          studentName: s.name,
-          studentClass: s.studentClass,
-          status: 'Present'
-        }));
-        this.loadSavedAttendance();
-        this.isLoading = false;
-      },
-      error: () => { this.isLoading = false; }
+    this.students = this.readStorage('teacher_students') as Student[];
+    this.classes = this.getUniqueValues(this.students.map(student => student.studentClass));
+    this.batches = this.getUniqueValues(this.students.map(student => student.batch?.name || ''));
+
+    const filteredStudents = this.students.filter(student => {
+      const classMatches = !this.filterClass || student.studentClass === this.filterClass;
+      const batchMatches = !this.filterBatch || (student.batch?.name || '') === this.filterBatch;
+      return classMatches && batchMatches;
     });
+
+    this.attendance = filteredStudents.map((student, index) => this.mapStudentToAttendance(student, index));
+    this.loadSavedAttendance();
+    this.isLoading = false;
   }
 
   onFilterChange(): void {
     this.loadStudents();
   }
 
-  markAll(status: 'Present' | 'Absent' | 'Leave'): void {
+  onDateChange(): void {
+    this.loadStudents();
+  }
+
+  markAll(status: AttendanceStatus): void {
+    if (!this.isToday) {
+      this.showSnack('You can only edit attendance for today!', 'error');
+      return;
+    }
     this.attendance.forEach(a => a.status = status);
   }
 
-  setStatus(record: AttendanceRecord, status: 'Present' | 'Absent' | 'Leave'): void {
+  setStatus(record: AttendanceRecord, status: AttendanceStatus): void {
+    if (!this.isToday) {
+      this.showSnack('You can only edit attendance for today!', 'error');
+      return;
+    }
     record.status = status;
   }
 
   saveAttendance(): void {
+    if (!this.isToday) {
+      this.showSnack('You can only save attendance for today!', 'error');
+      return;
+    }
     this.isSaving = true;
-    const attendanceStore = this.readStorage('teacher_attendance_records');
-    const nextStore = attendanceStore.filter((entry: any) => entry.date !== this.selectedDate);
-
-    this.attendance.forEach(record => {
-      nextStore.push({
-        date: this.selectedDate,
-        studentId: record.studentId,
-        studentName: record.studentName,
-        studentClass: record.studentClass,
-        status: record.status
+    try {
+      const attendanceStore = this.readStorage('teacher_attendance_records');
+      const currentKeys = new Set(this.attendance.map(record => this.getRecordKey(record)));
+      const nextStore = attendanceStore.filter((entry: any) => {
+        return !(entry.date === this.selectedDate && currentKeys.has(this.getStoredRecordKey(entry)));
       });
-    });
 
-    localStorage.setItem('teacher_attendance_records', JSON.stringify(nextStore));
-    this.isSaving = false;
-    this.showSnack('Attendance saved successfully!', 'success');
+      this.attendance.forEach(record => {
+        nextStore.push({
+          date: this.selectedDate,
+          studentId: record.studentId,
+          studentCode: record.studentCode,
+          studentName: record.studentName,
+          studentClass: record.studentClass,
+          batchName: record.batchName,
+          status: record.status
+        });
+      });
+
+      localStorage.setItem('teacher_attendance_records', JSON.stringify(nextStore));
+      this.showSnack('Attendance saved successfully!', 'success');
+    } catch {
+      this.showSnack('Failed to save attendance', 'error');
+    } finally {
+      this.isSaving = false;
+    }
   }
 
   private loadSavedAttendance(): void {
@@ -113,14 +149,68 @@ export class TeacherAttendanceComponent implements OnInit {
     }
 
     this.attendance = this.attendance.map(record => {
-      const saved = savedRecords.find((entry: any) => entry.studentId === record.studentId);
-      return saved ? { ...record, status: saved.status } : record;
+      const saved = savedRecords.find((entry: any) => this.getStoredRecordKey(entry) === this.getRecordKey(record));
+      return saved
+        ? { ...record, status: saved.status === 'Present' ? 'Present' : 'Absent' }
+        : record;
     });
   }
 
   private readStorage(key: string): any[] {
     const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : [];
+    if (!raw) {
+      return [];
+    }
+
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+
+  private mapStudentToAttendance(student: Student, index: number): AttendanceRecord {
+    const fallbackId = index + 1;
+    const numericStudentId = Number((student.studentId || '').replace(/\D/g, ''));
+    const studentId = typeof student.id === 'number'
+      ? student.id
+      : Number.isFinite(numericStudentId) && numericStudentId > 0
+        ? numericStudentId
+        : fallbackId;
+
+    return {
+      studentId,
+      studentCode: student.studentId || `#${studentId}`,
+      studentName: student.name,
+      studentClass: student.studentClass,
+      batchName: student.batch?.name || 'Not Assigned',
+      status: 'Present'
+    };
+  }
+
+  private getUniqueValues(values: string[]): string[] {
+    return [...new Set(values.filter(Boolean))].sort((left, right) => left.localeCompare(right));
+  }
+
+  private getRecordKey(record: AttendanceRecord): string {
+    return [
+      record.studentId,
+      record.studentCode,
+      record.studentName.trim().toLowerCase(),
+      record.studentClass,
+      record.batchName
+    ].join('|');
+  }
+
+  private getStoredRecordKey(entry: any): string {
+    return [
+      entry.studentId ?? '',
+      entry.studentCode ?? `#${entry.studentId ?? ''}`,
+      (entry.studentName || '').trim().toLowerCase(),
+      entry.studentClass || '',
+      entry.batchName || 'Not Assigned'
+    ].join('|');
   }
 
   private showSnack(msg: string, type: 'success' | 'error'): void {

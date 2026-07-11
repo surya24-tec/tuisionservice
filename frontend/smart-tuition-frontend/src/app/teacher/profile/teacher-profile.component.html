@@ -1,26 +1,116 @@
 <div class="profile-page">
-  <div class="spinner-wrap" *ngIf="isLoading">
-    <mat-spinner diameter="40"></mat-spinner>
-  </div>
-
-  <div class="profile-card" *ngIf="!isLoading && profile">
-    <div class="avatar">{{ getInitials() }}</div>
-    <h1>{{ profile.name }}</h1>
-    <p>{{ profile.teachingSubject }}</p>
-
-    <div class="profile-grid">
-      <div><strong>Email:</strong> {{ profile.email }}</div>
-      <div><strong>Mobile:</strong> {{ profile.mobileNumber }}</div>
-      <div><strong>Experience:</strong> {{ profile.experience }} years</div>
-      <div><strong>Salary:</strong> {{ profile.salary }}</div>
-      <div><strong>Joining Date:</strong> {{ profile.joiningDate }}</div>
-      <div><strong>Status:</strong> {{ profile.status }}</div>
-      <div><strong>Address:</strong> {{ profile.address || 'Not provided' }}</div>
+  <div class="page-header">
+    <div class="header-left">
+      <h1><mat-icon>person</mat-icon> Teacher Profile</h1>
+      <p class="subtitle">View and manage your personal information</p>
+    </div>
+    <button *ngIf="!isEditing" class="btn-primary" (click)="startEdit()">
+      <mat-icon>edit</mat-icon> Edit Profile
+    </button>
+    <div *ngIf="isEditing" class="edit-actions">
+      <button class="btn-secondary" (click)="cancelEdit()">
+        <mat-icon>close</mat-icon> Cancel
+      </button>
+      <button class="btn-primary" (click)="saveProfile()">
+        <mat-icon>save</mat-icon> Save Changes
+      </button>
     </div>
   </div>
 
-  <div class="profile-card" *ngIf="!isLoading && !profile">
-    <h2>{{ userName }}</h2>
-    <p>Teacher profile is not available yet.</p>
+  <div class="profile-container">
+    <!-- Profile Header Card -->
+    <div class="header-card">
+      <div class="avatar-wrapper">
+        <div class="avatar">{{ getInitials() }}</div>
+      </div>
+      <div class="header-info">
+        <h2>{{ isEditing ? editedProfile.name : profile.name }}</h2>
+        <p class="subject">{{ isEditing ? editedProfile.teachingSubject : profile.teachingSubject }} Teacher</p>
+        <span class="status-badge active">{{ isEditing ? editedProfile.status : profile.status }}</span>
+      </div>
+    </div>
+
+    <!-- Profile Details Grid -->
+    <div class="details-grid">
+      <!-- Personal Information Card -->
+      <div class="detail-card">
+        <div class="card-header">
+          <mat-icon>badge</mat-icon>
+          <h3>Personal Information</h3>
+        </div>
+        <div class="detail-item">
+          <mat-icon>person_outline</mat-icon>
+          <div class="detail-content">
+            <span class="label">Full Name</span>
+            <span *ngIf="!isEditing" class="value">{{ profile.name }}</span>
+            <input *ngIf="isEditing" type="text" [(ngModel)]="editedProfile.name" class="form-input">
+          </div>
+        </div>
+        <div class="detail-item">
+          <mat-icon>email</mat-icon>
+          <div class="detail-content">
+            <span class="label">Email Address</span>
+            <span *ngIf="!isEditing" class="value">{{ profile.email }}</span>
+            <input *ngIf="isEditing" type="email" [(ngModel)]="editedProfile.email" class="form-input">
+          </div>
+        </div>
+        <div class="detail-item">
+          <mat-icon>phone</mat-icon>
+          <div class="detail-content">
+            <span class="label">Mobile Number</span>
+            <span *ngIf="!isEditing" class="value">{{ profile.mobileNumber }}</span>
+            <input *ngIf="isEditing" type="text" [(ngModel)]="editedProfile.mobileNumber" class="form-input">
+          </div>
+        </div>
+        <div class="detail-item">
+          <mat-icon>location_on</mat-icon>
+          <div class="detail-content">
+            <span class="label">Address</span>
+            <span *ngIf="!isEditing" class="value">{{ profile.address || 'Not provided' }}</span>
+            <input *ngIf="isEditing" type="text" [(ngModel)]="editedProfile.address" class="form-input">
+          </div>
+        </div>
+      </div>
+
+      <!-- Professional Information Card -->
+      <div class="detail-card">
+        <div class="card-header">
+          <mat-icon>work</mat-icon>
+          <h3>Professional Information</h3>
+        </div>
+        <div class="detail-item">
+          <mat-icon>school</mat-icon>
+          <div class="detail-content">
+            <span class="label">Teaching Subject</span>
+            <span *ngIf="!isEditing" class="value">{{ profile.teachingSubject }}</span>
+            <input *ngIf="isEditing" type="text" [(ngModel)]="editedProfile.teachingSubject" class="form-input">
+          </div>
+        </div>
+        <div class="detail-item">
+          <mat-icon>timer</mat-icon>
+          <div class="detail-content">
+            <span class="label">Experience</span>
+            <span *ngIf="!isEditing" class="value">{{ profile.experience }} years</span>
+            <input *ngIf="isEditing" type="number" [(ngModel)]="editedProfile.experience" class="form-input">
+          </div>
+        </div>
+        <div class="detail-item">
+          <mat-icon>attach_money</mat-icon>
+          <div class="detail-content">
+            <span class="label">Salary</span>
+            <span *ngIf="!isEditing" class="value">${{ profile.salary.toLocaleString() }}</span>
+            <input *ngIf="isEditing" type="number" [(ngModel)]="editedProfile.salary" class="form-input">
+          </div>
+        </div>
+        <div class="detail-item">
+          <mat-icon>event</mat-icon>
+          <div class="detail-content">
+            <span class="label">Joining Date</span>
+            <span *ngIf="!isEditing" class="value">{{ profile.joiningDate }}</span>
+            <input *ngIf="isEditing" type="date" [(ngModel)]="editedProfile.joiningDate" class="form-input">
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
