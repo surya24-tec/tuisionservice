@@ -27,18 +27,18 @@ export class ChartsComponent implements OnInit {
       legend: {
         display: true,
         labels: {
-          color: 'rgba(255, 255, 255, 0.7)'
+          color: '#475569'
         }
       }
     },
     scales: {
       x: {
-        ticks: { color: 'rgba(255, 255, 255, 0.5)' },
-        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+        ticks: { color: '#64748b' },
+        grid: { color: '#f1f5f9' }
       },
       y: {
-        ticks: { color: 'rgba(255, 255, 255, 0.5)' },
-        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+        ticks: { color: '#64748b' },
+        grid: { color: '#f1f5f9' }
       }
     }
   };

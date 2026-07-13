@@ -23,7 +23,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
   hidePassword = true;
   roles = [
-    { value: 'ROLE_STUDENT', label: 'Student' },
+    //  { value: 'ROLE_STUDENT', label: 'Student' },
     { value: 'ROLE_TEACHER', label: 'Teacher' }
   ];
 

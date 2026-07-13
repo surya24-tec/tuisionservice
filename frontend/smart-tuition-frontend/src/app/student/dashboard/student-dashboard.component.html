@@ -1,7 +1,7 @@
 <div class="dashboard-page">
   <div class="page-header">
-    <h1 class="page-title">Student Dashboard</h1>
-    <p class="page-subtitle">Welcome back, {{ studentName }}! Here's a look at your progress and schedule.</p>
+    <h1 class="page-title">Welcome Back, {{ studentName }}!</h1>
+    <p class="page-subtitle">Here's what's happening with your courses today.</p>
   </div>
 
   <div class="loading-shade" *ngIf="isLoading">
@@ -10,31 +10,73 @@
 
   <div class="dashboard-content" *ngIf="!isLoading">
     <!-- Stat Cards -->
-    <app-dashboard-cards [cards]="statCards"></app-dashboard-cards>
+    <div class="stats-grid">
+      <mat-card class="stat-card" *ngFor="let card of statCards">
+        <mat-card-content class="stat-content">
+          <div class="stat-icon" [style.backgroundColor]="card.color + '15'">
+            <mat-icon [style.color]="card.color">{{ card.icon }}</mat-icon>
+          </div>
+          <div class="stat-text">
+            <h3>{{ card.value }}</h3>
+            <p>{{ card.title }}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
 
-    <!-- Content Sections -->
-    <div class="widgets-grid">
-      <div class="left-column">
-        <app-timetable-widget 
-          [userId]="userId" 
-          role="STUDENT">
-        </app-timetable-widget>
-      </div>
+    <!-- Recent Tests & Marks -->
+    <div class="content-grid">
+      <!-- Recent Tests -->
+      <mat-card class="content-card">
+        <mat-card-header>
+          <mat-card-title>Upcoming Tests</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content">
+          <div *ngIf="recentTests.length > 0; else noTests">
+            <div class="list-item" *ngFor="let test of recentTests">
+              <div class="item-icon" style="background: #8b5cf620; color: #8b5cf6;">
+                <mat-icon>quiz</mat-icon>
+              </div>
+              <div class="item-details">
+                <h4>{{ test.title }}</h4>
+                <p>{{ test.subject }} • {{ test.date }}</p>
+              </div>
+            </div>
+          </div>
+          <ng-template #noTests>
+            <div class="empty-list">
+              <mat-icon>schedule</mat-icon>
+              <p>No upcoming tests</p>
+            </div>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
 
-      <div class="right-column">
-        <div class="quick-access-wrap">
-          <app-quick-access-widget 
-            title="Quick Navigation" 
-            [actions]="quickActions">
-          </app-quick-access-widget>
-        </div>
-
-        <div class="notifications-wrap">
-          <app-notifications-widget 
-            role="STUDENT">
-          </app-notifications-widget>
-        </div>
-      </div>
+      <!-- Recent Marks -->
+      <mat-card class="content-card">
+        <mat-card-header>
+          <mat-card-title>Recent Grades</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-content">
+          <div *ngIf="recentMarks.length > 0; else noMarks">
+            <div class="list-item" *ngFor="let mark of recentMarks">
+              <div class="item-icon" style="background: #10b98120; color: #10b981;">
+                <mat-icon>grade</mat-icon>
+              </div>
+              <div class="item-details">
+                <h4>{{ mark.testTitle }}</h4>
+                <p>{{ mark.marksObtained }}/{{ mark.maxMarks }} • {{ mark.grade }}</p>
+              </div>
+            </div>
+          </div>
+          <ng-template #noMarks>
+            <div class="empty-list">
+              <mat-icon>assessment</mat-icon>
+              <p>No recent grades</p>
+            </div>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

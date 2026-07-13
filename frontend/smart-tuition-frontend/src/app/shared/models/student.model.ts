@@ -6,6 +6,7 @@ export interface Student {
   parentName: string;
   parentMobileNumber: string;
   email: string;
+  password?: string;          // For student login
   address: string;
   batch?: { id?: number; name?: string } | null;
   admissionDate: string;

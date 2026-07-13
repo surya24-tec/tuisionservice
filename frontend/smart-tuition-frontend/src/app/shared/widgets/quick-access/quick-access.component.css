@@ -1,11 +1,12 @@
 .widget-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   height: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
 .widget-header {
@@ -15,7 +16,7 @@
 .widget-header h3 {
   font-size: 16px;
   font-weight: 600;
-  color: #fff;
+  color: #1e293b;
   margin: 0;
   letter-spacing: 0.3px;
 }
@@ -34,28 +35,27 @@
   justify-content: center;
   gap: 12px;
   padding: 20px 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.7);
+  color: #475569;
 }
 
 .action-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #1e293b;
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .icon-wrap {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.03);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,8 +63,7 @@
 }
 
 .action-item:hover .icon-wrap {
-  background: currentColor;
-  opacity: 0.15;
+  opacity: 0.8;
 }
 
 .action-item mat-icon {

@@ -45,11 +45,11 @@
     <div class="table-wrap">
       <table mat-table [dataSource]="dataSource" matSort class="students-table">
 
-        <!-- Student ID -->
-        <ng-container matColumnDef="studentId">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <!-- S.No -->
+        <ng-container matColumnDef="sNo">
+          <th mat-header-cell *matHeaderCellDef>S.No</th>
           <td mat-cell *matCellDef="let s">
-            <span class="id-badge">{{ s.studentId || '#' + s.id }}</span>
+            <span class="sno-badge">{{ s.sNo }}</span>
           </td>
         </ng-container>
 
@@ -187,11 +187,21 @@
       </div>
     </div>
 
-    <div class="form-row">
+    <div class="form-row two-col">
       <div class="form-group">
         <label>Email *</label>
         <input formControlName="email" type="email" placeholder="student@email.com" />
         <span class="error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">Valid email required</span>
+      </div>
+      <div class="form-group">
+        <label>{{ isEditing ? 'Password (leave blank to keep current)' : 'Password *' }}</label>
+        <div class="password-input-wrapper">
+          <input formControlName="password" [type]="hidePassword ? 'password' : 'text'" placeholder="Enter password" />
+          <button type="button" class="password-toggle" (click)="hidePassword = !hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
+        <span class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">Password is required for new students</span>
       </div>
     </div>
 

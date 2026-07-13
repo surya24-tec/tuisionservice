@@ -30,7 +30,7 @@ import { Student } from '../../shared/models/student.model';
   styleUrls: ['./teacher-students.component.css']
 })
 export class TeacherStudentsComponent implements OnInit {
-  displayedColumns = ['studentId', 'name', 'studentClass', 'batch', 'parentName', 'parentMobileNumber', 'status', 'actions'];
+  displayedColumns = ['sNo', 'name', 'studentClass', 'batch', 'parentName', 'parentMobileNumber', 'status', 'actions'];
   dataSource = new MatTableDataSource<Student>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -40,6 +40,7 @@ export class TeacherStudentsComponent implements OnInit {
   showForm = false;
   isEditing = false;
   selectedStudent: Student | null = null;
+  hidePassword = true;
 
   searchQuery = '';
   filterClass = '';
@@ -78,6 +79,7 @@ export class TeacherStudentsComponent implements OnInit {
       parentName: [student?.parentName || '', Validators.required],
       parentMobileNumber: [student?.parentMobileNumber || '', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       email: [student?.email || '', [Validators.required, Validators.email]],
+      password: [student?.password || '', this.isEditing ? '' : Validators.required],
       address: [student?.address || '', Validators.required],
       batchName: [student?.batch?.name || ''],
       admissionDate: [student?.admissionDate || new Date().toISOString().split('T')[0], Validators.required],
@@ -116,10 +118,16 @@ export class TeacherStudentsComponent implements OnInit {
 
     this.totalElements = filteredStudents.length;
     
-    // Apply pagination
+    // Apply pagination and add sNo
     const start = this.currentPage * this.pageSize;
     const end = start + this.pageSize;
-    this.dataSource.data = filteredStudents.slice(start, end);
+    const paginatedStudents = filteredStudents.slice(start, end);
+    
+    // Add sNo property to each student in paginated array
+    this.dataSource.data = paginatedStudents.map((student, index) => ({
+      ...student,
+      sNo: start + index + 1
+    }));
     
     this.isLoading = false;
   }
@@ -155,6 +163,7 @@ export class TeacherStudentsComponent implements OnInit {
       parentName: formValue.parentName,
       parentMobileNumber: formValue.parentMobileNumber,
       email: formValue.email,
+      password: formValue.password,
       address: formValue.address,
       batch: formValue.batchName ? { name: formValue.batchName } : null,
       admissionDate: formValue.admissionDate,

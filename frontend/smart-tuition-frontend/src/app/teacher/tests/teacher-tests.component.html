@@ -1,4 +1,6 @@
 <div class="page-container">
+
+  <!-- Page Header -->
   <div class="page-header">
     <div class="header-left">
       <h1><mat-icon>assignment</mat-icon> Tests</h1>
@@ -8,127 +10,211 @@
       <mat-icon>add</mat-icon> New Test
     </button>
   </div>
+  
 
+  <!-- Filters Bar -->
+  <div class="filters-bar">
+    <div class="search-box">
+      <mat-icon>search</mat-icon>
+      <input type="text" placeholder="Search by title, subject…" [(ngModel)]="searchQuery" (input)="onSearch()" />
+    </div>
+
+    <div class="filter-group">
+      <select [(ngModel)]="filterClass" (change)="onFilterChange()">
+        <option value="">All Classes</option>
+        <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
+      </select>
+
+      <select [(ngModel)]="filterStatus" (change)="onFilterChange()">
+        <option value="">All Statuses</option>
+        <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+      </select>
+
+      <button class="btn-ghost" (click)="clearFilters()" matTooltip="Clear Filters">
+        <mat-icon>filter_alt_off</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
   <div class="spinner-wrap" *ngIf="isLoading">
     <mat-spinner diameter="48"></mat-spinner>
   </div>
 
-  <div class="tests-table" *ngIf="!isLoading && tests.length > 0">
-    <table mat-table [dataSource]="tests" class="mat-elevation-z1">
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef>Title</th>
-        <td mat-cell *matCellDef="let t">{{ t.title }}</td>
-      </ng-container>
-      <ng-container matColumnDef="subject">
-        <th mat-header-cell *matHeaderCellDef>Subject</th>
-        <td mat-cell *matCellDef="let t">{{ t.subject }}</td>
-      </ng-container>
-      <ng-container matColumnDef="className">
-        <th mat-header-cell *matHeaderCellDef>Class</th>
-        <td mat-cell *matCellDef="let t">{{ t.className }}</td>
-      </ng-container>
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef>Date</th>
-        <td mat-cell *matCellDef="let t">{{ t.date | date }}</td>
-      </ng-container>
-      <ng-container matColumnDef="maxMarks">
-        <th mat-header-cell *matHeaderCellDef>Max Marks</th>
-        <td mat-cell *matCellDef="let t">{{ t.maxMarks }}</td>
-      </ng-container>
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let t"><span class="status-chip" [ngClass]="getStatusClass(t.status)">{{ t.status }}</span></td>
-      </ng-container>
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let t">
-          <button mat-icon-button class="btn-edit" (click)="openEditForm(t)" matTooltip="Edit">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button class="btn-delete" (click)="deleteTest(t)" matTooltip="Delete">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+  <!-- Data Table -->
+  <div class="table-card" *ngIf="!isLoading">
+    <div class="table-wrap">
+      <table mat-table [dataSource]="dataSource" matSort class="tests-table">
 
-      <tr mat-header-row *matHeaderRowDef="['title','subject','className','date','maxMarks','status','actions']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['title','subject','className','date','maxMarks','status','actions'];"></tr>
-    </table>
-  </div>
+        <!-- Title -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+          <td mat-cell *matCellDef="let t">{{ t.title }}</td>
+        </ng-container>
 
-  <div class="empty-state" *ngIf="!isLoading && tests.length === 0">
-    <mat-icon>assignment</mat-icon>
-    <h3>No Tests Created</h3>
-    <p>Click "New Test" to start adding assessments.</p>
-  </div>
+        <!-- Subject -->
+        <ng-container matColumnDef="subject">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Subject</th>
+          <td mat-cell *matCellDef="let t">{{ t.subject }}</td>
+        </ng-container>
 
-  <!-- Slide‑in Form Panel -->
-  <div class="form-overlay" [class.visible]="showForm" (click)="closeForm()"></div>
-  <aside class="form-panel" [class.open]="showForm">
-    <div class="form-panel-header">
-      <h2>{{ isEditing ? 'Edit Test' : 'Create New Test' }}</h2>
-      <button mat-icon-button (click)="closeForm()"><mat-icon>close</mat-icon></button>
+        <!-- Class -->
+        <ng-container matColumnDef="className">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Class</th>
+          <td mat-cell *matCellDef="let t">{{ t.className }}</td>
+        </ng-container>
+
+        <!-- Date -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let t">{{ t.date }}</td>
+        </ng-container>
+
+        <!-- Max Marks -->
+        <ng-container matColumnDef="maxMarks">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Max Marks</th>
+          <td mat-cell *matCellDef="let t">{{ t.maxMarks }}</td>
+        </ng-container>
+
+        <!-- Status -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let t"><span class="status-chip" [ngClass]="getStatusClass(t.status)">{{ t.status }}</span></td>
+        </ng-container>
+
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let t">
+            <div class="action-btns">
+              <button mat-icon-button [color]="t.published ? 'warn' : 'primary'" (click)="togglePublish(t)" matTooltip="{{ t.published ? 'Unpublish Test' : 'Publish Test' }}">
+                <mat-icon>{{ t.published ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              <button mat-icon-button class="btn-edit" (click)="openEditForm(t)" matTooltip="Edit Test">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="btn-delete" (click)="deleteTest(t)" matTooltip="Delete Test">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+      </table>
     </div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="test-form">
-      <div class="form-row">
+
+    <mat-paginator
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      (page)="onPageChange($event)"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="!isLoading && dataSource.data.length === 0">
+    <mat-icon>assignment</mat-icon>
+    <h3>No Tests Found</h3>
+    <p>Click "New Test" to start adding assessments.</p>
+    <button class="btn-primary" (click)="openAddForm()">
+      <mat-icon>add</mat-icon> New Test
+    </button>
+  </div>
+
+</div>
+
+<!-- ========== SLIDE-IN FORM PANEL ========== -->
+<div class="form-overlay" [class.visible]="showForm" (click)="closeForm()"></div>
+
+<aside class="form-panel" [class.open]="showForm">
+  <div class="form-panel-header">
+    <h2>{{ isEditing ? 'Edit Test' : 'Create New Test' }}</h2>
+    <button mat-icon-button (click)="closeForm()"><mat-icon>close</mat-icon></button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="test-form">
+
+    <div class="form-row">
+      <div class="form-group">
         <label>Title *</label>
-        <input formControlName="title" placeholder="Test Title" />
-        <span class="error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">Title required</span>
+        <input formControlName="title" placeholder="Test title" />
+        <span class="error" *ngIf="form.get('title')?.touched && form.get('title')?.invalid">Title is required</span>
       </div>
-      <div class="form-row two-col">
-        <div class="form-group">
-          <label>Subject *</label>
-          <select formControlName="subject">
-            <option value="">Select subject</option>
-            <option *ngFor="let s of subjects" [value]="s">{{ s }}</option>
-          </select>
-          <span class="error" *ngIf="form.get('subject')?.touched && form.get('subject')?.invalid">Subject required</span>
-        </div>
-        <div class="form-group">
-          <label>Class *</label>
-          <select formControlName="className">
-            <option value="">Select class</option>
-            <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
-          </select>
-          <span class="error" *ngIf="form.get('className')?.touched && form.get('className')?.invalid">Class required</span>
-        </div>
+    </div>
+
+    <div class="form-row two-col">
+      <div class="form-group">
+        <label>Subject *</label>
+        <select formControlName="subject">
+          <option value="">Select Subject</option>
+          <option *ngFor="let s of subjects" [value]="s">{{ s }}</option>
+        </select>
+        <span class="error" *ngIf="form.get('subject')?.touched && form.get('subject')?.invalid">Subject is required</span>
       </div>
-      <div class="form-row two-col">
-        <div class="form-group">
-          <label>Date *</label>
-          <input type="date" formControlName="date" />
-          <span class="error" *ngIf="form.get('date')?.touched && form.get('date')?.invalid">Date required</span>
-        </div>
-        <div class="form-group">
-          <label>Max Marks *</label>
-          <input type="number" formControlName="maxMarks" min="1" />
-          <span class="error" *ngIf="form.get('maxMarks')?.touched && form.get('maxMarks')?.invalid">Enter a positive number</span>
-        </div>
+      <div class="form-group">
+        <label>Class *</label>
+        <select formControlName="className">
+          <option value="">Select Class</option>
+          <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
+        </select>
+        <span class="error" *ngIf="form.get('className')?.touched && form.get('className')?.invalid">Class is required</span>
       </div>
-      <div class="form-row">
+    </div>
+
+    <div class="form-row two-col">
+      <div class="form-group">
+        <label>Date *</label>
+        <input formControlName="date" type="date" />
+        <span class="error" *ngIf="form.get('date')?.touched && form.get('date')?.invalid">Date is required</span>
+      </div>
+      <div class="form-group">
+        <label>Max Marks *</label>
+        <input formControlName="maxMarks" type="number" min="1" />
+        <span class="error" *ngIf="form.get('maxMarks')?.touched && form.get('maxMarks')?.invalid">Enter a positive number</span>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
         <label>Duration (minutes) *</label>
-        <input type="number" formControlName="duration" min="1" />
+        <input formControlName="duration" type="number" min="1" />
         <span class="error" *ngIf="form.get('duration')?.touched && form.get('duration')?.invalid">Enter a positive number</span>
       </div>
-      <div class="form-row">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
         <label>Description</label>
-        <textarea formControlName="description" rows="3"></textarea>
+        <textarea formControlName="description" placeholder="Test description" rows="2"></textarea>
       </div>
-      <div class="form-row">
+    </div>
+
+    <div class="form-row two-col">
+      <div class="form-group">
         <label>Status *</label>
         <select formControlName="status">
-          <option value="Scheduled">Scheduled</option>
-          <option value="Completed">Completed</option>
-          <option value="Cancelled">Cancelled</option>
+          <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
         </select>
       </div>
-      <div class="form-actions">
-        <button type="button" class="btn-ghost" (click)="closeForm()">Cancel</button>
-        <button type="submit" class="btn-primary" [disabled]="form.invalid">
-          <mat-icon>{{ isEditing ? 'save' : 'add' }}</mat-icon>
-          {{ isEditing ? 'Update' : 'Create' }}
-        </button>
+      <div class="form-group">
+        <label>Batch</label>
+        <select formControlName="batch">
+          <option value="">Not Assigned</option>
+          <option *ngFor="let b of batches" [value]="b">{{ b }}</option>
+        </select>
       </div>
-    </form>
-  </aside>
-</div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-ghost" (click)="closeForm()">Cancel</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">
+        <mat-icon>{{ isEditing ? 'save' : 'add' }}</mat-icon>
+        {{ isEditing ? 'Update Test' : 'Create Test' }}
+      </button>
+    </div>
+
+  </form>
+</aside>

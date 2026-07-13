@@ -57,6 +57,7 @@ export const routes: Routes = [
       { path: 'dashboard', loadComponent: () => import('./student/dashboard/student-dashboard.component').then(m => m.StudentDashboardComponent) },
       { path: 'attendance', loadComponent: () => import('./student/pages/student-attendance.component').then(m => m.StudentAttendanceComponent) },
       { path: 'marks', loadComponent: () => import('./student/pages/student-marks.component').then(m => m.StudentMarksComponent) },
+      { path: 'tests', loadComponent: () => import('./student/pages/student-tests.component').then(m => m.StudentTestsComponent) },
       { path: 'materials', loadComponent: () => import('./student/pages/student-materials.component').then(m => m.StudentMaterialsComponent) },
       { path: 'timetable', loadComponent: () => import('./student/pages/student-timetable.component').then(m => m.StudentTimetableComponent) },
       { path: 'notifications', loadComponent: () => import('./student/pages/student-notifications.component').then(m => m.StudentNotificationsComponent) },

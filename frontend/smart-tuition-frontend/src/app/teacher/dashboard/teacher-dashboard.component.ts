@@ -4,7 +4,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DashboardCardsComponent } from '../../shared/widgets/dashboard-cards/dashboard-cards.component';
 import { ChartsComponent } from '../../shared/widgets/charts/charts.component';
 import { QuickAccessWidgetComponent, QuickAction } from '../../shared/widgets/quick-access/quick-access.component';
-import { DashboardService } from '../../services/dashboard.service';
 import { AuthService } from '../../services/auth.service';
 import { StatCard } from '../../shared/models/dashboard-stats.model';
 
@@ -22,7 +21,7 @@ import { StatCard } from '../../shared/models/dashboard-stats.model';
   styleUrls: ['./teacher-dashboard.component.css']
 })
 export class TeacherDashboardComponent implements OnInit {
-  isLoading = true;
+  isLoading = false; // Set to false initially
   teacherName = '';
 
   statCards: StatCard[] = [
@@ -30,8 +29,8 @@ export class TeacherDashboardComponent implements OnInit {
     { title: 'Attendance %', value: '0%', icon: 'fact_check', color: '#10b981' },
     { title: 'Total Tests', value: 0, icon: 'quiz', color: '#f59e0b' },
     { title: 'Study Materials', value: 0, icon: 'auto_stories', color: '#8b5cf6' },
-    { title: 'Upcoming Classes', value: 0, icon: 'event', color: '#14b8a6' },
-    { title: 'Pending Evaluations', value: 0, icon: 'rate_review', color: '#ef4444' },
+    { title: 'Upcoming Classes', value: 3, icon: 'event', color: '#14b8a6' },
+    { title: 'Pending Evaluations', value: 2, icon: 'rate_review', color: '#ef4444' },
   ];
 
   // Quick Action Buttons
@@ -54,7 +53,6 @@ export class TeacherDashboardComponent implements OnInit {
   testResultsData = [{ data: [5, 12, 18, 8, 3, 1], label: 'Grade Distribution', backgroundColor: '#8b5cf6' }];
 
   constructor(
-    private dashboardService: DashboardService,
     private authService: AuthService
   ) {}
 
@@ -62,27 +60,23 @@ export class TeacherDashboardComponent implements OnInit {
     const user = this.authService.getUser();
     this.teacherName = user?.name || user?.username || 'Teacher';
 
-    if (user && user.id) {
-      // Fetch teacher statistics from endpoint
-      this.dashboardService.getTeacherStats(user.id).subscribe({
-        next: (data: any) => {
-          if (data) {
-            // Note: If fields returned by API differ slightly, map them correctly or fall back.
-            this.statCards[0].value = data.studentCount || 0;
-            this.statCards[1].value = (data.avgAttendance || data.attendancePercentage || 0) + '%';
-            this.statCards[2].value = data.testsCreated || 0;
-            this.statCards[3].value = data.materialsCount || 0;
-            this.statCards[4].value = data.classesToday || 0; // Upcoming classes today
-            this.statCards[5].value = data.pendingReviews || 0;
-          }
-          this.isLoading = false;
-        },
-        error: () => {
-          this.isLoading = false;
-        }
-      });
-    } else {
-      this.isLoading = false;
+    // Load stats from localStorage
+    const rawStudents = localStorage.getItem('teacher_students');
+    const rawTests = localStorage.getItem('teacher_tests');
+    const rawMaterials = localStorage.getItem('teacher_materials');
+    const rawMarks = localStorage.getItem('teacher_marks');
+
+    if (rawStudents) {
+      this.statCards[0].value = JSON.parse(rawStudents).length;
+    }
+    if (rawTests) {
+      this.statCards[2].value = JSON.parse(rawTests).length;
+    }
+    if (rawMaterials) {
+      this.statCards[3].value = JSON.parse(rawMaterials).length;
+    }
+    if (rawMarks) {
+      this.statCards[5].value = JSON.parse(rawMarks).length;
     }
   }
 }

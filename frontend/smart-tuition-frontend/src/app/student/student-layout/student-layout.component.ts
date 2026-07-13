@@ -21,6 +21,7 @@ export class StudentLayoutComponent {
 
   menuItems: MenuItem[] = [
     { icon: 'dashboard', label: 'Dashboard', route: '/student/dashboard' },
+    { icon: 'quiz', label: 'Tests', route: '/student/tests' },
     { icon: 'fact_check', label: 'Attendance', route: '/student/attendance' },
     { icon: 'grade', label: 'Marks', route: '/student/marks' },
     { icon: 'auto_stories', label: 'Study Materials', route: '/student/materials' },

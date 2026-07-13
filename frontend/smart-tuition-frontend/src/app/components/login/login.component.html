@@ -5,8 +5,8 @@
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill">
-          <mat-label>Username</mat-label>
-          <input matInput formControlName="username" required>
+          <mat-label>Email or Username</mat-label>
+          <input matInput formControlName="username" required placeholder="student@email.com or teacher username">
         </mat-form-field>
 
         <mat-form-field appearance="fill">

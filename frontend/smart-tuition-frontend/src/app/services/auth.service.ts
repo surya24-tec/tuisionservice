@@ -2,7 +2,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
+import { Student } from '../shared/models/student.model';
 
 interface JwtResponse {
   token: string;
@@ -24,6 +25,28 @@ export class AuthService {
 
 
   login(username: string, password: string): Observable<JwtResponse> {
+    // First check if it's a student login (using email)
+    const rawStudents = localStorage.getItem('teacher_students');
+    const students: Student[] = rawStudents ? JSON.parse(rawStudents) : [];
+    
+    const foundStudent = students.find(s => s.email === username && s.password === password);
+    
+    if (foundStudent) {
+      const studentUser: JwtResponse = {
+        token: 'student-token-' + foundStudent.id,
+        type: 'Bearer',
+        id: foundStudent.id || 0,
+        username: foundStudent.name,
+        email: foundStudent.email,
+        name: foundStudent.name,
+        roles: ['ROLE_STUDENT']
+      };
+      localStorage.setItem('token', studentUser.token);
+      localStorage.setItem('user', JSON.stringify(studentUser));
+      return of(studentUser);
+    }
+
+    // Else try backend login for teachers/admins
     return this.http.post<JwtResponse>(API_URL + 'signin', { username, password }).pipe(
       tap((response: JwtResponse) => {
         if (response.token) {
@@ -46,6 +69,9 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     const token = localStorage.getItem('token');
+    if (token && token.startsWith('student-token-')) {
+      return true;
+    }
     return token != null && !this.jwtHelper.isTokenExpired(token);
   }
 
