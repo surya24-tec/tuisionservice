@@ -8,11 +8,8 @@
 }
 
 .login-card {
-  background: rgb(131, 164, 212);
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 450px;
+  max-width: 500px;
   padding: 3rem 2.5rem;
 }
 
@@ -24,13 +21,13 @@
 .app-title {
   font-size: 2.25rem;
   font-weight: 800;
-  color: hsl(0, 60%, 1%);
+  color: white;
   margin: 0;
   letter-spacing: -0.02em;
 }
 
 .app-subtitle {
-  color: #000101;
+  color: rgba(255, 255, 255, 0.85);
   font-size: 0.95rem;
   margin: 0.5rem 0 0;
 }
@@ -39,14 +36,14 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 2rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .tab {
   padding: 0.75rem 0;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #94a3b8;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   cursor: pointer;
   position: relative;
@@ -54,11 +51,11 @@
 }
 
 .tab:hover {
-  color: #1e40af;
+  color: white;
 }
 
 .tab.active {
-  color: #1e40af;
+  color: white;
 }
 
 .tab.active::after {
@@ -68,7 +65,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, #1e40af, #3b82f6);
+  background: white;
 }
 
 .login-form {
@@ -86,26 +83,27 @@
 .form-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .form-input {
-  padding: 0.875rem 1rem;
-  border: 1.5px solid #486a92;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  color: #1e293b;
-  transition: all 0.2s ease;
+  padding: 0.75rem 0;
+  border: none;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0;
+  font-size: 1rem;
+  color: white;
+  background: transparent;
   outline: none;
+  transition: border-color 0.2s ease;
 }
 
 .form-input::placeholder {
-  color: #000000;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .form-input:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-bottom-color: white;
 }
 
 .password-input-container {
@@ -121,10 +119,10 @@
 
 .password-toggle {
   position: absolute;
-  right: 1rem;
+  right: 0;
   background: none;
   border: none;
-  color: #64748b;
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
   padding: 0.25rem;
   display: flex;
@@ -134,7 +132,7 @@
 }
 
 .password-toggle:hover {
-  color: #000000;
+  color: white;
 }
 
 .password-toggle mat-icon {
@@ -144,20 +142,20 @@
 .submit-btn {
   margin-top: 0.5rem;
   padding: 1rem;
-  background: linear-gradient(135deg, #486a92 0%, #486a92 100%);
-  color: rgb(0, 0, 0);
+  background: white;
+  color: #f0f1f4;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(30, 64, 175, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(30, 64, 175, 0.35);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .submit-btn:active:not(:disabled) {
@@ -165,15 +163,15 @@
 }
 
 .submit-btn:disabled {
-  background: #73787f;
-  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.8);
   cursor: not-allowed;
   box-shadow: none;
 }
 
 .form-error {
   font-size: 0.8rem;
-  color: #ef4444;
+  color: #ffcccc;
   font-weight: 500;
 }
 
@@ -189,8 +187,13 @@
   .app-title {
     font-size: 1.875rem;
   }
-  .nav-tabs {
-  display: flex;
-  justify-content: flex-end;
 }
+.login-link {
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link:hover {
+    color: #333;
 }
