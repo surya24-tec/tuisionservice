@@ -1,281 +1,85 @@
-<div class="register-page-container">
-  <div class="split-card">
+<div class="page-container">
+  <div class="register-card">
+    <div class="card-header">
+      <h1 class="app-title">Learnify</h1>
+      <p class="app-subtitle">Create your account</p>
+    </div>
     
-    <!-- Left Panel (Welcome Page) -->
-    <div class="left-panel">
-      <!-- SVG Night Sky Illustration -->
-      <div class="svg-container">
-        <svg viewBox="0 0 400 500" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <!-- Gradients -->
-            <linearGradient id="bookCover" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#0288d1" />
-              <stop offset="100%" stop-color="#005691" />
-            </linearGradient>
-            <linearGradient id="bookPages" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#ffffff" />
-              <stop offset="50%" stop-color="#f1f5f9" />
-              <stop offset="100%" stop-color="#e2e8f0" />
-            </linearGradient>
-            <radialGradient id="glowEffect" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.6" />
-              <stop offset="50%" stop-color="#0288d1" stop-opacity="0.2" />
-              <stop offset="100%" stop-color="#071b2d" stop-opacity="0" />
-            </radialGradient>
-            <linearGradient id="capGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#1e293b" />
-              <stop offset="100%" stop-color="#0f172a" />
-            </linearGradient>
-            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#fbbf24" />
-              <stop offset="100%" stop-color="#d97706" />
-            </linearGradient>
-          </defs>
 
-          <!-- Starry/Particle Background -->
-          <circle cx="50" cy="80" r="1.5" fill="#38bdf8" opacity="0.6" />
-          <circle cx="120" cy="50" r="1" fill="#fff" opacity="0.5" />
-          <circle cx="280" cy="90" r="2" fill="#38bdf8" opacity="0.4" />
-          <circle cx="340" cy="60" r="1" fill="#fff" opacity="0.7" />
-          <circle cx="90" cy="220" r="1.5" fill="#38bdf8" opacity="0.5" />
-          <circle cx="320" cy="240" r="2" fill="#fff" opacity="0.3" />
-
-          <!-- Big Central Light Glow behind the Cap and Book -->
-          <circle cx="200" cy="230" r="150" fill="url(#glowEffect)" />
-
-          <!-- Floating Graduation Cap -->
-          <g transform="translate(200, 160) scale(1.1)">
-            <!-- Cap shadow -->
-            <ellipse cx="0" cy="30" rx="45" ry="10" fill="#000" opacity="0.25" filter="blur(3px)" />
-
-            <!-- Cap main rhombus (top side) -->
-            <polygon points="-55,0 0,-18 55,0 0,18" fill="url(#capGrad)" stroke="#334155" stroke-width="1" />
-            <polygon points="-51,0 0,-15 51,0 0,15" fill="#334155" opacity="0.3" />
-
-            <!-- Cap underpart -->
-            <path d="M -28,8 C -28,22 28,22 28,8 L 25,20 C 25,28 -25,28 -25,20 Z" fill="url(#capGrad)" />
-            <!-- Golden band -->
-            <path d="M -26,12 C -26,20 26,20 26,12" fill="none" stroke="url(#goldGrad)" stroke-width="2" />
-
-            <!-- Cap Tassel button -->
-            <ellipse cx="0" cy="-3" rx="4" ry="2" fill="url(#goldGrad)" />
-            <!-- Tassel string -->
-            <path d="M 0,-3 Q 22,2 30,15 Q 34,20 34,26" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" />
-            <!-- Tassel fringe -->
-            <polygon points="32,26 36,26 38,38 30,38" fill="url(#goldGrad)" />
-          </g>
-
-          <!-- Open Book -->
-          <g transform="translate(200, 275) scale(1.2)">
-            <!-- Book Shadow -->
-            <path d="M -75,25 Q 0,35 75,25 Q 90,40 0,40 Q -90,40 -75,25 Z" fill="#000" opacity="0.35" filter="blur(4px)" />
-
-            <!-- Book Cover/Base -->
-            <path d="M -74,20 Q 0,28 74,20 L 78,25 Q 0,33 -78,25 Z" fill="url(#bookCover)" />
-
-            <!-- Book Pages Left -->
-            <path d="M -70,16 Q 0,24 0,5 L 0,-18 Q 0,0 -70,-8 Z" fill="url(#bookPages)" />
-            <!-- Book Pages Right -->
-            <path d="M 70,16 Q 0,24 0,5 L 0,-18 Q 0,0 70,-8 Z" fill="url(#bookPages)" />
-
-            <!-- Bookmark ribbon -->
-            <path d="M 0,5 L 0,28 L -5,24 L -10,28 L -10,5 Z" fill="#ef4444" />
-            <path d="M 0,5 L 4,26 L 8,24 L 12,26 L 8,5 Z" fill="#ef4444" opacity="0.6" />
-
-            <!-- Book Page Lines (Left Page) -->
-            <path d="M -55,-2 L -15,-6" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" />
-            <path d="M -58,4 L -15,0" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" />
-            <path d="M -52,10 L -15,6" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" />
-
-            <!-- Book Page Lines (Right Page) -->
-            <path d="M 15,-6 L 55,-2" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" />
-            <path d="M 15,0 L 58,4" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" />
-            <path d="M 15,6 L 52,10" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" />
-          </g>
-
-          <!-- Glowing Ideas & Sparkles rising from the book -->
-          <g stroke="url(#goldGrad)" stroke-width="1.5" fill="none" opacity="0.8">
-            <!-- Atom / Molecule -->
-            <g transform="translate(80, 150) scale(0.7)">
-              <ellipse cx="20" cy="20" rx="15" ry="5" transform="rotate(30 20 20)" stroke="#38bdf8" />
-              <ellipse cx="20" cy="20" rx="15" ry="5" transform="rotate(-30 20 20)" stroke="#38bdf8" />
-              <circle cx="20" cy="20" r="3" fill="#fbbf24" />
-            </g>
-
-            <!-- Math symbol (Pi) -->
-            <g transform="translate(300, 160) scale(0.8)">
-              <path d="M5,5 L25,5 M10,5 L10,20 C10,22 8,24 5,24 M20,5 L20,24" stroke="#fbbf24" stroke-linecap="round" />
-            </g>
-
-            <!-- Sparkles -->
-            <path d="M 200,80 L 200,90 M 195,85 L 205,85" stroke="#fbbf24" stroke-linecap="round" />
-            <path d="M 110,280 L 110,286 M 107,283 L 113,283" stroke="#38bdf8" stroke-linecap="round" />
-            <path d="M 290,270 L 290,276 M 287,273 L 293,273" stroke="#38bdf8" stroke-linecap="round" />
-          </g>
-
-          <!-- Glowing Lightbulb -->
-          <g transform="translate(200, 85) scale(0.65)">
-            <circle cx="0" cy="-10" r="35" fill="#fef08a" opacity="0.3" filter="blur(4px)" />
-            <path d="M -18,-25 C -30,-15 -25,10 -12,18 L -12,28 C -12,30 12,30 12,28 L 12,18 C 25,10 30,-15 18,-25 C 10,-33 -10,-33 -18,-25 Z" fill="#0f172a" stroke="url(#goldGrad)" stroke-width="2.5" />
-            <path d="M -8,28 L 8,28 M -6,32 L 6,32 M -3,36 L 3,36" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round" />
-            <path d="M -8,-5 Q 0,-18 8,-5" fill="none" stroke="#fef08a" stroke-width="2" stroke-linecap="round" />
-            <path d="M -8,-5 L -4,12 M 8,-5 L 4,12" stroke="url(#goldGrad)" stroke-width="2" />
-          </g>
-        </svg>
+    
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" formControlName="firstName" class="form-input" placeholder="Enter your full name" required>
+        @if (registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid) {
+          <span class="form-error">Name is required</span>
+        }
       </div>
 
-      <!-- Welcome Content Overlaid -->
-      <div class="welcome-overlay">
-        <div class="welcome-text-container">
-          <h2 class="welcome-title">Welcome</h2>
-          <p class="welcome-desc">
-            Learn better, grow stronger, and achieve your dreams with expert guidance. Your journey towards a successful future starts here.
-          </p>
+      <div class="form-group">
+        <label class="form-label">Username</label>
+        <input type="text" formControlName="username" class="form-input" placeholder="Choose a username" required>
+        @if (registerForm.get('username')?.touched && registerForm.get('username')?.invalid) {
+          <span class="form-error">Username is required</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" formControlName="email" class="form-input" placeholder="Enter your email" required>
+        @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
+          <span class="form-error">
+            @if (registerForm.get('email')?.errors?.['required']) { Email is required }
+            @if (registerForm.get('email')?.errors?.['email']) { Enter a valid email address }
+          </span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mobile Number</label>
+        <input type="text" formControlName="mobileNumber" class="form-input" placeholder="Enter 10-digit mobile number" required>
+        @if (registerForm.get('mobileNumber')?.touched && registerForm.get('mobileNumber')?.invalid) {
+          <span class="form-error">
+            @if (registerForm.get('mobileNumber')?.errors?.['required']) { Mobile number is required }
+            @if (registerForm.get('mobileNumber')?.errors?.['pattern']) { Enter a valid 10-digit number }
+          </span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="password-input-container">
+          <input [type]="hidePassword ? 'password' : 'text'" formControlName="password" class="form-input" placeholder="Choose a password (min 6 characters)" required>
+          <button type="button" class="password-toggle" (click)="hidePassword = !hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+          </button>
         </div>
-<!--         
-        <div class="social-connect-container">
-          <div class="social-divider">
-            <span>GET CONNECTED WITH</span>
-          </div>
-          <div class="social-icons">
-            <a href="#" class="social-icon twitter" aria-label="Twitter">
-              <i class="bi bi-twitter-x"></i>
-            </a>
-            <a href="#" class="social-icon google" aria-label="Google Plus">
-              <i class="bi bi-google"></i>
-            </a>
-            <a href="#" class="social-icon facebook" aria-label="Facebook">
-              <i class="bi bi-facebook"></i>
-            </a>
-          </div>
-        </div> -->
+        @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+          <span class="form-error">
+            @if (registerForm.get('password')?.errors?.['required']) { Password is required }
+            @if (registerForm.get('password')?.errors?.['minlength']) { Minimum 6 characters }
+          </span>
+        }
       </div>
+
+      <div class="form-group">
+        <label class="form-label">Role</label>
+        <select formControlName="role" class="form-input form-select" required>
+          @for (r of roles; track r.value) {
+            <option [value]="r.value">{{ r.label }}</option>
+          }
+        </select>
+        @if (registerForm.get('role')?.touched && registerForm.get('role')?.invalid) {
+          <span class="form-error">Role selection is required</span>
+        }
+      </div>
+
+      <button type="submit" class="submit-btn" [disabled]="!registerForm.valid">
+        Create Account
+      </button>
+       <div class=" d-flex justify-content-end">
+      <a routerLink="/login" >Sign In</a>
     </div>
-    
-    <!-- Right Panel (Form Page) -->
-    <div class="right-panel">
-      <!-- Top Navigation Tabs -->
-      <div class="top-nav-tabs">
-        <a routerLink="/login" class="nav-tab">Sign In</a>
-        <a routerLink="/register" class="nav-tab active">Register</a>
-      </div>
-      
-      <!-- Registration Form -->
-      <div class="register-form-wrapper">
-        <h1 class="register-heading">Register</h1>
-        
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="custom-form">
-          
-          <!-- First & Last Name row -->
-          <div class="form-row">
-            <div class="form-group half-width">
-              <label class="custom-label">First Name</label>
-              <input type="text" formControlName="firstName" class="custom-input" placeholder="Enter First Name" required>
-              <div class="input-focus-line"></div>
-              @if (registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid) {
-                <span class="field-error">Required</span>
-              }
-            </div>
-            
-            <div class="form-group half-width">
-              <label class="custom-label">Last Name</label>
-              <input type="text" formControlName="lastName" class="custom-input" placeholder="Enter Last Name" required>
-              <div class="input-focus-line"></div>
-              @if (registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid) {
-                <span class="field-error">Required</span>
-              }
-            </div>
-          </div>
-
-          <!-- Username -->
-          <div class="form-group">
-            <label class="custom-label">Username</label>
-            <input type="text" formControlName="username" class="custom-input" placeholder="Choose a username" required>
-            <div class="input-focus-line"></div>
-            @if (registerForm.get('username')?.touched && registerForm.get('username')?.invalid) {
-              <span class="field-error">Username is required</span>
-            }
-          </div>
-
-          <!-- Email -->
-          <div class="form-group">
-            <label class="custom-label">Email</label>
-            <input type="email" formControlName="email" class="custom-input" placeholder="Enter your email" required>
-            <div class="input-focus-line"></div>
-            @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
-              <span class="field-error">
-                @if (registerForm.get('email')?.errors?.['required']) { Email is required }
-                @if (registerForm.get('email')?.errors?.['email']) { Enter a valid email address }
-              </span>
-            }
-          </div>
-
-          <!-- Mobile Number -->
-          <div class="form-group">
-            <label class="custom-label">Mobile Number</label>
-            <input type="text" formControlName="mobileNumber" class="custom-input" placeholder="Enter 10-digit number" required>
-            <div class="input-focus-line"></div>
-            @if (registerForm.get('mobileNumber')?.touched && registerForm.get('mobileNumber')?.invalid) {
-              <span class="field-error">
-                @if (registerForm.get('mobileNumber')?.errors?.['required']) { Mobile number is required }
-                @if (registerForm.get('mobileNumber')?.errors?.['pattern']) { Enter a valid 10-digit number }
-              </span>
-            }
-          </div>
-
-          <!-- Password with Toggle -->
-          <div class="form-group">
-            <label class="custom-label">Password</label>
-            <div class="password-input-wrapper">
-              <input [type]="hidePassword ? 'password' : 'text'" formControlName="password" class="custom-input" placeholder="••••••••" required>
-              <button type="button" class="password-toggle-btn" (click)="hidePassword = !hidePassword" aria-label="Toggle password visibility">
-                <i class="bi" [ngClass]="hidePassword ? 'bi-eye-fill' : 'bi-eye-slash-fill'"></i>
-              </button>
-            </div>
-            <div class="input-focus-line"></div>
-            @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
-              <span class="field-error">
-                @if (registerForm.get('password')?.errors?.['required']) { Password is required }
-                @if (registerForm.get('password')?.errors?.['minlength']) { Minimum 6 characters }
-              </span>
-            }
-          </div>
-
-          <!-- Role Select -->
-          <div class="form-group">
-            <label class="custom-label">Role</label>
-            <select formControlName="role" class="custom-input custom-select" required>
-              @for (r of roles; track r.value) {
-                <option [value]="r.value">{{ r.label }}</option>
-              }
-            </select>
-            <div class="input-focus-line"></div>
-            @if (registerForm.get('role')?.touched && registerForm.get('role')?.invalid) {
-              <span class="field-error">Role selection is required</span>
-            }
-          </div>
-
-          <!-- Terms of Service Checkbox -->
-          <div class="terms-group">
-            <label class="checkbox-container">
-              <input type="checkbox" id="agree-terms" required>
-              <span class="checkbox-checkmark"></span>
-              <span class="checkbox-label-text">
-                I agree all the statements in <a href="#" class="terms-link">Terms of service</a>
-              </span>
-            </label>
-          </div>
-
-          <!-- Submit Button -->
-          <div class="submit-group">
-            <button type="submit" class="submit-btn" [disabled]="!registerForm.valid">
-              Sign Up
-            </button>
-          </div>
-
-        </form>
-      </div>
-    </div>
-
+    </form>
   </div>
 </div>

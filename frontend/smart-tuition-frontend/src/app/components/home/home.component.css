@@ -1,5 +1,5 @@
 .hero-section {
-  background: linear-gradient(135deg, #7bdcf7 0%, #85cdf4 100%);
+  background: linear-gradient(135deg, #486a92 0%, #486a92 100%);
   min-height: 85vh;
   display: flex;
   align-items: center;
@@ -23,25 +23,25 @@
 }
 
 .navbar .nav-link:hover {
-  color: #1e40af !important;
+  color: #486a92 !important;
 }
 
 .btn-primary {
-  background-color: #1e40af;
-  border-color: #1e40af;
+  background-color: #486a92;
+  border-color: #486a92;
 }
 
 .btn-primary:hover {
-  background-color: #1e3a8a;
-  border-color: #1e3a8a;
+  background-color: #486a92;
+  border-color: #486a92;
 }
 
 .text-primary {
-  color: #1e40af !important;
+  color: #486a92 !important;
 }
 
 .bg-primary {
-  background-color: #1e40af !important;
+  background-color: #486a92 !important;
 }
 
 .bg-opacity-10 {
